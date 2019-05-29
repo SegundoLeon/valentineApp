@@ -10,6 +10,7 @@ import { SubastaAutomaticaComponent } from './subasta/subasta-automatica.compone
 import { PagoProcesadoComponent } from './pago/pago-procesado.component';
 import { RentabilidadListaComponent } from './pago/rentabilidad-lista.component';
 import { RentabilidadDetalleComponent } from './pago/rentabilidad-detalle.component';
+// Otros imports
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
