@@ -1,0 +1,46 @@
+<div class="contenedor">
+
+  <h2>Reporte de subastas procesdas</h2>
+
+  <mat-table class="mat-elevation-z8" [dataSource]="fuenteDatos" *ngIf="!estaCargando else sinDatos">
+
+    <ng-container matColumnDef="FechaTermino">
+      <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+      <mat-cell *matCellDef="let subasta"> {{subasta.fechaTermino}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="TotalSubasta">
+      <mat-header-cell *matHeaderCellDef> Cantidad </mat-header-cell>
+      <mat-cell *matCellDef="let subasta"> {{subasta.TotalSubastas}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="FondosExactos">
+      <mat-header-cell *matHeaderCellDef> Con Fondos Exactos </mat-header-cell>
+      <mat-cell *matCellDef="let subasta"> {{subasta.FondosExactos}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="FondosMinimos">
+      <mat-header-cell *matHeaderCellDef> Con Fondos Mínimos </mat-header-cell>
+      <mat-cell *matCellDef="let subasta"> {{subasta.FondosMinimos}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="SinFondos">
+      <mat-header-cell *matHeaderCellDef> Sin Fondos Requeridos </mat-header-cell>
+      <mat-cell *matCellDef="let subasta"> {{subasta.SinFondos}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnasMostradas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnasMostradas;"></mat-row>
+
+  </mat-table>
+
+  <ng-template #sinDatos>
+      <div class="mat-elevation-z8 noData cargaDatos">
+        <mat-spinner *ngIf="estaCargando" class="spinner"></mat-spinner>
+        <h2 *ngIf="estaCargando">Cargando datos</h2>
+        <h2 *ngIf="!estaCargando">No hay registros disponibles</h2>
+      </div>
+  </ng-template>
+
+</div>
+

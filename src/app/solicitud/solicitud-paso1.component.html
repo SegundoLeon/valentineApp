@@ -1,0 +1,175 @@
+<div class="contenedor">
+
+    <h2>Registro de solicitud de credito</h2>
+
+<form [formGroup]="registroPaso1Formulario" novalidate>
+  <mat-card class="shipping-card mat-elevation-z8">
+    <div *ngIf="mostrarMensaje" class="cuadro-mensaje">
+      <div class="cuadro-resaltado">{{ mensajeError }}</div>
+    </div>
+    <mat-card-content>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Nombres" formControlName="nombreSolicitante" maxlength="40" required>
+            <mat-error *ngIf="registroPaso1Formulario.controls['nombreSolicitante'].hasError('required')">
+              Sus nombres son <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Apellido Paterno" formControlName="apellidoParternoSolicitante" required>
+            <mat-error *ngIf="registroPaso1Formulario.controls['apellidoParternoSolicitante'].hasError('required')">
+              Su apellido paterno es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Apellido Materno" formControlName="apellidoMaternoSolicitante" required>
+            <mat-error *ngIf="registroPaso1Formulario.controls['apellidoMaternoSolicitante'].hasError('required')">
+              Su apellido materno es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de Nacimiento" formControlName="fechaNacimiento">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+            <mat-error *ngIf="registroPaso1Formulario.controls['fechaNacimiento'].hasError('required')">
+                Su fecha de nacimiento es <strong>requerido</strong>
+              </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Tipo de documento" formControlName="tipoDocumento">
+              <mat-option *ngFor="let documento of documentos" [value]="documento.ID">
+                {{ documento.Nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="registroPaso1Formulario.controls['tipoDocumento'].hasError('required')">
+              Su tipo de documento de identidad es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Numero de documento" formControlName="numeroDocumento" maxlength="8" required>
+            <mat-error *ngIf="registroPaso1Formulario.controls['numeroDocumento'].hasError('required')">
+              El número de documento es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="registroPaso1Formulario.controls['numeroDocumento'].hasError('minlength')">
+              Debe ingresar un número de 8 digitos
+            </mat-error>
+            <mat-error *ngIf="registroPaso1Formulario.controls['numeroDocumento'].hasError('pattern')">
+              Debe ingresar solo números
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+            <mat-form-field class="full-width">
+              <input matInput placeholder="Digito de verificacion" formControlName="digitoVerificacion" maxlength="1" required>
+              <mat-error *ngIf="registroPaso1Formulario.controls['digitoVerificacion'].hasError('required')">
+                El digito de verificacion es <strong>requerido</strong>
+              </mat-error>
+              <mat-error *ngIf="registroPaso1Formulario.controls['digitoVerificacion'].hasError('pattern')">
+                Ingrese un número
+              </mat-error>
+            </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Genero" formControlName="genero">
+              <mat-option *ngFor="let genero of generos" [value]="genero.ID">
+                {{ genero.Nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="registroPaso1Formulario.controls['tipoDocumento'].hasError('required')">
+              Su genero es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Correo electronico" formControlName="correoElectronico" required>
+            <mat-error *ngIf="registroPaso1Formulario.controls['correoElectronico'].hasError('required')">
+              El correo electrónico es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="registroPaso1Formulario.controls['correoElectronico'].hasError('pattern')">
+              Ingrese un correo electrónico válido
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Numero celular" formControlName="numeroCelular" maxlength="9">
+            <mat-error *ngIf="registroPaso1Formulario.controls['numeroCelular'].hasError('required')">
+              Su numero de celular es <strong>requerido</strong>
+            </mat-error>
+            <mat-error *ngIf="registroPaso1Formulario.controls['numeroCelular'].hasError('pattern')">
+              Ingrese un número de celular válido
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <input matInput placeholder="Ingreso mensual" formControlName="ingresosMensuales">
+            <mat-error *ngIf="registroPaso1Formulario.controls['ingresosMensuales'].hasError('required')">
+              Su ingreso mensual es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Grado de instruccion" formControlName="gradoInstruccion">
+              <mat-option *ngFor="let grado of grados" [value]="grado.ID">
+                {{ grado.Nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="registroPaso1Formulario.controls['gradoInstruccion'].hasError('required')">
+              Su genero es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col">
+          <mat-form-field class="full-width">
+            <mat-select placeholder="Destino del credito" formControlName="destinoCredito">
+              <mat-option *ngFor="let destino of destinos" [value]="destino.ID">
+                {{ destino.Nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="registroPaso1Formulario.controls['destinoCredito'].hasError('required')">
+              Su genero es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <mat-checkbox formControlName="aceptoTerminos" required>
+            <label>Acepto los términos y condiciones de la plataforma *</label>
+          </mat-checkbox>
+        </div>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary" type="submit" (click)="registrarPrimerPaso()" [disabled]="!registroPaso1Formulario.valid">Siguiente</button>
+    </mat-card-actions>
+  </mat-card>
+</form>
+</div>

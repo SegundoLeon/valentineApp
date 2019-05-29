@@ -1,0 +1,35 @@
+<div class="contenedor">
+
+  <h2>Reporte de ofertas de participación automática</h2>
+
+  <mat-table class="mat-elevation-z8" [dataSource]="fuenteDatos"
+    *ngIf="!estaCargando else sinDatos">
+
+    <ng-container matColumnDef="Fecha">
+      <mat-header-cell *matHeaderCellDef> Fecha </mat-header-cell>
+      <mat-cell *matCellDef="let participacion"> {{participacion.Fecha}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Inversiones">
+      <mat-header-cell *matHeaderCellDef> Inversiones </mat-header-cell>
+      <mat-cell *matCellDef="let participacion"> {{participacion.Cantidad}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="SumaMontoOferta">
+      <mat-header-cell *matHeaderCellDef> Monto ofertado (S/) </mat-header-cell>
+      <mat-cell *matCellDef="let participacion"> {{participacion.SumaMontoOferta}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnasMostradas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnasMostradas;"></mat-row>
+  </mat-table>
+
+  <ng-template #sinDatos>
+    <div class="mat-elevation-z8 noData cargaDatos">
+      <mat-spinner *ngIf="estaCargando" class="spinner"></mat-spinner>
+      <h2 *ngIf="estaCargando">Cargando datos</h2>
+      <h2 *ngIf="!estaCargando">No hay registros disponibles</h2>
+    </div>
+  </ng-template>
+  
+</div>

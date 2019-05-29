@@ -1,0 +1,59 @@
+<div class="contenedor">
+  <h2>Reporte de rentabilidad anual proyectada</h2>
+
+  <mat-table class="mat-elevation-z8" [dataSource]="fuenteDatos" *ngIf="!estaCargando else sinDatos">
+
+    <ng-container matColumnDef="Periodo">
+      <mat-header-cell *matHeaderCellDef> Periodo </mat-header-cell>
+      <mat-cell *matCellDef="let datos"> {{datos.Mes}} - {{datos.Anio}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Capital">
+      <mat-header-cell *matHeaderCellDef> Capital </mat-header-cell>
+      <mat-cell *matCellDef="let datos"> {{datos.Capital}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Interes">
+      <mat-header-cell *matHeaderCellDef> Interes </mat-header-cell>
+      <mat-cell *matCellDef="let datos"> {{datos.Interes}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Moras">
+      <mat-header-cell *matHeaderCellDef> Moras </mat-header-cell>
+      <mat-cell *matCellDef="let datos"> {{datos.Moras}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="Comisiones">
+      <mat-header-cell *matHeaderCellDef> Comisiones </mat-header-cell>
+      <mat-cell *matCellDef="let datos"> {{datos.Comisiones}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="RetornoNeto">
+        <mat-header-cell *matHeaderCellDef> Retorno neto </mat-header-cell>
+        <mat-cell *matCellDef="let datos"> {{datos.RetornoNeto}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="Cuotas">
+        <mat-header-cell *matHeaderCellDef> Cuotas </mat-header-cell>
+        <mat-cell *matCellDef="let datos"> {{datos.Cuotas}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="DetallePeriodo">
+        <mat-header-cell *matHeaderCellDef> Detalle del periodo </mat-header-cell>
+        <mat-cell *matCellDef="let datos"> {{datos.Cuotas}} </mat-cell>
+      </ng-container>
+
+    <mat-header-row *matHeaderRowDef="columnasMostradas"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: columnasMostradas;"></mat-row>
+
+  </mat-table>
+
+  <ng-template #sinDatos>
+      <div class="mat-elevation-z8 noData cargaDatos">
+        <mat-spinner *ngIf="estaCargando" class="spinner"></mat-spinner>
+        <h2 *ngIf="estaCargando">Cargando datos</h2>
+        <h2 *ngIf="!estaCargando">No hay registros disponibles</h2>
+      </div>
+  </ng-template>
+
+</div>
