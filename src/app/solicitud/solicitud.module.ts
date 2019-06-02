@@ -9,9 +9,10 @@ import { SolicitudPaso3Component } from './solicitud-paso3.component';
 // Modulos Angular Material
 import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
 import { MatDividerModule, MatTableModule, MatFormFieldModule, MatCardModule } from '@angular/material';
-import { MatDatepickerModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
-import { MatNativeDateModule, MatButtonModule, MatRadioModule } from '@angular/material';
-import { MatDialogModule } from '@angular/material';
+import { MatDialogModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
+import { MatButtonModule, MatRadioModule } from '@angular/material';
+import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
+
 // Modulos compartidos
 import { CompartidoModule } from '../compartido/compartido.module';
 
@@ -32,4 +33,8 @@ const routes: Routes = [
   ],
   exports: [RouterModule, SolicitudPaso1Component]
 })
-export class SolicitudModule { }
+export class SolicitudModule {
+  constructor(private dateAdapter:DateAdapter<Date>) {
+    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  }
+ }

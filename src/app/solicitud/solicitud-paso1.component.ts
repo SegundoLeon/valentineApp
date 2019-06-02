@@ -33,6 +33,8 @@ export class SolicitudPaso1Component implements OnInit {
   registroPaso1Formulario: FormGroup;
   mensajeError = '';
   mostrarMensaje = false;
+  fechaDate: Date;
+  fechaString: string;
 
   constructor(private formBuilder: FormBuilder, private parametroService: ParametroService,
               private solicitudCreditoService: SolicitudCreditoService, private router: Router,
@@ -50,13 +52,17 @@ export class SolicitudPaso1Component implements OnInit {
       nombreSolicitante: [null, [Validators.required]],
       apellidoParternoSolicitante: [null, Validators.required],
       apellidoMaternoSolicitante: [null, Validators.required],
-      fechaNacimiento: [null], tipoDocumento: [null],
+      fechaNacimiento: [null], 
+      tipoDocumento: [null],
       numeroDocumento: [null, [Validators.required, Validators.minLength(8), Validators.pattern('[0-9]*')]],
       digitoVerificacion: [null, [Validators.required, Validators.pattern('[0-9]*')]],
       genero: [null],
       correoElectronico: [null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
       numeroCelular: [null, [Validators.pattern('[0-9]*')]],
-      ingresosMensuales: [null], gradoInstruccion: [null], destinoCredito: [null], aceptoTerminos: [null]
+      ingresosMensuales: [null], 
+      gradoInstruccion: [null], 
+      destinoCredito: [null], 
+      aceptoTerminos: [null]
     });
   }
 
@@ -81,23 +87,28 @@ export class SolicitudPaso1Component implements OnInit {
     this.mostrarMensaje = false;
 
     // Verificar cliente en el Servicio de la RENIEC
+    // (1) DNI y digito de verificacion deben coincider (2) apellidos y nombre deben estar contenidos
+    // Se devuleve una cadena vacia cuando existe algun dato erroneo.
     this.solicitudCreditoService.validarDatosReniec(persona).subscribe((respuesta: ReniecRespuestaModel) => {
 
+      // Ingresa si la RENIEC encontro alguna cohincidencia
       if (respuesta) {
         let nombre: string;
-        // La RENIEC devuleve una cadena vacia cuando existe algun dato erroneo.
+        
         if (persona.Nombres.search(' ') === -1) {
           nombre = persona.Nombres;
         } else {
           nombre = persona.Nombres.substring(0, persona.Nombres.indexOf(' '));
         }
 
+        // Aqui verificamos que nombres y apellidos ingresados sean como los tiene la RENIEC
         // PENDIENTE: VERIFICAR QUE NO ARROGE ERROR POR COLOCAR MIS DATOS EN MINUSCULA
         if (nombre !== String(respuesta.PrimerNombre).trim() || persona.ApellidoPaterno !== respuesta.ApellidoPaterno ||
             persona.ApellidoMaterno !== respuesta.ApellidoMaterno) {
-            this.mensajeError = 'Revise su nombre, número de documento o el digito de verificacion.';
-            console.log(nombre + ' validando nombres');
+            this.mostrarMensaje = true;
+            this.mensajeError = 'Revise que ha ingresado correctamente sus nombres y apellidos.';
         } else {
+          // Estamos aqui si todo esta OK
           this.registroPaso1Formulario.patchValue({nombreSolicitante: respuesta.PrimerNombre || ' ' || respuesta.SegundoNombre});
           let correoRespuesta: CorreoRespuestaModel = new CorreoRespuestaModel();
           //alert('Los datos ingresados son validos!');
@@ -129,7 +140,8 @@ export class SolicitudPaso1Component implements OnInit {
                 return;
             } else {
 
-              // Evaluar cliente en central de riesgos
+              // El cliente no tiene una solicitud o credito activo
+              // Se evalua el riesgo del ciente en nuestro modelo
               var evaluacionConsultaModel: EvaluacionConsultaModel = new EvaluacionConsultaModel();
               evaluacionConsultaModel.NumeroDni = persona.NumeroDni;
               evaluacionConsultaModel.DigitoVerificacion = persona.DigitoVerificacion;
@@ -142,29 +154,39 @@ export class SolicitudPaso1Component implements OnInit {
               .subscribe((resultado: EvaluacionRespuestaModel) => {
                 if (resultado.Resultado === 'rechazada') {
                     correoRespuesta.EmailType = 4;
-                    console.log('rechazada');
+                    console.log('Solicitud rechazada por Modelo de Riesgo');
+                    this.mostrarMensaje = true;
+                    this.mensajeError = 'Solicitud rechazada por Modelo de Riesgo';
                     //this.solicitudCreditoService.enviarMail(correoRespuesta).subscribe();
                     //this.router.navigate(['/notSuccessClips']);
                 } else {
+                    // Cliente aceptado por el Modelo de Riesgo
+                    console.log('Solicitud aceptada por Modelo de Riesgo');
+                    this.mostrarMensaje = true;
+                    this.mensajeError = 'Solicitud aceptada por Modelo de Riesgo';
+
                     this.registroPaso1Model.setAll(this.registroPaso1Formulario.value);
-                    this.registroPaso1Model.fechaNacimiento = this.registroPaso1Formulario.value.fechaNacimiento.formatted;
+                    this.fechaDate = this.registroPaso1Formulario.value.fechaNacimiento;
+                    this.fechaString = this.fechaDate.getDate().toString() + '/' + this.fechaDate.getMonth().toString() + '/' + this.fechaDate.getFullYear().toString();
+                    this.registroPaso1Model.fechaNacimiento = this.fechaString;
                     this.registroPaso1Model.estado = EstadoSolicitudCreditoConstants.REGISTROENPROCESO;
                     this.registroPaso1Model.etapa = EtapasSolicitudCreditoConstants.REGISTRO;
                     this.registroPaso1Model.fechaRegistro = new Date();
                     this.registroPaso1Model.puntuacionBuro = resultado.PuntuacionBuro;
-                    console.log('aceptada');
-                    console.log(this.registroPaso1Model);
 
                     this.solicitudCreditoService.registerFirstStep(this.registroPaso1Model).subscribe(
                         (registerFirstStepModelResult: RegistroPaso1Model) => {
-                            console.log('aceptada');
+                            console.log('Registro grabado con exito!');
                             console.log(registerFirstStepModelResult);
+                            this.mostrarMensaje = true;
+                            this.mensajeError = 'Registro grabado con exito!';
                             // var localStorageModel: LocalStorageModel = new LocalStorageModel();
                             // localStorageModel.solicitudCreditoId = registerFirstStepModelResult.codigoSolCredito;
                             // localStorageModel.step = 2;
                             // this.storageManager.savePermanentData(localStorageModel, LocalStoreManager.DBKEY_USER_DATA);
                             //this.router.navigate([`/registerSecondStep/${registerFirstStepModelResult.codigoSolCredito}`]);
                         }, (error => {
+                              console.error(error);
                               this.mostrarMensaje = true;
                               this.mensajeError = error;})
                     );
@@ -182,6 +204,7 @@ export class SolicitudPaso1Component implements OnInit {
         }
 
       } else {
+        this.mostrarMensaje = true;
         this.mensajeError = 'Problemas con el API de la RENIEC';
       }
 
