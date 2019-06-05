@@ -62,7 +62,6 @@ export class SolicitudPaso2Component implements OnInit {
   }
 
   paisChange(id: any): void {
-    console.log("ingresamos al pais");
     this.ubigeoService.getByPadreID(id).subscribe(
         (result: UbigeoModel[]) => { this.departamentos = result; }, error => console.error(error));
   }
@@ -73,12 +72,12 @@ export class SolicitudPaso2Component implements OnInit {
   }
 
   estadoCivilChange(id: any): void {
-      if (id === '1: 18') {
-          this.solictanteCasado = true;
-      }
-      else {
-          this.solictanteCasado = false;
-      }
+    if (id.toString() === '18') {
+        this.solictanteCasado = true;
+    }
+    else {
+        this.solictanteCasado = false;
+    }
   }
 
   provinciaChange(id: number): void {
@@ -119,7 +118,6 @@ export class SolicitudPaso2Component implements OnInit {
   }
 
   private cargarCombos() {
-    console.log("antes de cargar combos");
     this.ubigeoService.getByPadreID(ParametroConstants.PAIS).subscribe(
       (result: UbigeoModel[]) => {this.paises = result;}, error => console.error(error), );
     this.parametroService.getByPadreID(ParametroConstants.SEGURO).subscribe(

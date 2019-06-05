@@ -10,7 +10,7 @@ import { SolicitudPaso3Component } from './solicitud-paso3.component';
 import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
 import { MatDividerModule, MatTableModule, MatFormFieldModule, MatCardModule } from '@angular/material';
 import { MatDialogModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
-import { MatButtonModule, MatRadioModule } from '@angular/material';
+import { MatButtonModule, MatRadioModule, MatIconModule } from '@angular/material';
 import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
 
 // Modulos compartidos
@@ -35,7 +35,8 @@ const routes: Routes = [
     CommonModule, CompartidoModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
     MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
     MatCardModule, MatDatepickerModule, MatSelectModule, MatCheckboxModule, 
-    ReactiveFormsModule, MatNativeDateModule, MatButtonModule, MatRadioModule, MatDialogModule
+    ReactiveFormsModule, MatNativeDateModule, MatButtonModule, MatRadioModule, MatDialogModule,
+    MatIconModule
   ],
   exports: [RouterModule, SolicitudPaso1Component]
 })

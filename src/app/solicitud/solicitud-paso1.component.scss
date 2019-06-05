@@ -7,9 +7,10 @@
   width: 100%;
 }
 
-.shipping-card {
+.solicitud-card {
   min-width: 120px;
   margin: 20px auto;
+  //max-width: 900px;
 }
 
 .mat-radio-button {
@@ -37,6 +38,24 @@
   height: 20px;
   padding: 10px;
 }
+
 .cuadro-mensaje {
   height: 40px;
+}
+
+.mat-card-avatar {
+  background-size: cover;
+}
+
+.monto-derecha {
+  text-align: right;
+}
+
+input.monto-derecha::-webkit-outer-spin-button,
+input.monto-derecha::-webkit-inner-spin-button {
+display: none;
+}
+
+input.monto-derecha {
+  -moz-appearance: textfield;
 }
