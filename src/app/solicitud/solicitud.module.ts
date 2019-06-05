@@ -17,18 +17,24 @@ import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/
 import { CompartidoModule } from '../compartido/compartido.module';
 
 const routes: Routes = [
-  {
-    path: '',
-    component: SolicitudPaso1Component,
-  }
+  { path: '', component: SolicitudPaso1Component, }
 ];
+
+//const routes: Routes = [
+//  { path: '', component: SolicitudPaso1Component,
+//    children: [
+//      { path: 'paso1', component: SolicitudPaso1Component },
+//      { path: 'paso2, component: SolicitudPaso2Component }
+//    ]
+//  },
+//];
 
 @NgModule({
   declarations: [SolicitudPaso1Component, SolicitudPaso2Component, SolicitudPaso3Component],
   imports: [
     CommonModule, CompartidoModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
     MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
-    MatCardModule, MatDatepickerModule, MatSelectModule, MatCheckboxModule,
+    MatCardModule, MatDatepickerModule, MatSelectModule, MatCheckboxModule, 
     ReactiveFormsModule, MatNativeDateModule, MatButtonModule, MatRadioModule, MatDialogModule
   ],
   exports: [RouterModule, SolicitudPaso1Component]

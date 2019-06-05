@@ -1,3 +1,317 @@
-<p>
-  solicitud-paso2 works!
-</p>
+<div class="contenedor">
+
+  <h2>Registro de solicitud de credito</h2>
+
+<form [formGroup]="registroPaso2Formulario" novalidate>
+<mat-card class="shipping-card mat-elevation-z8">
+  <div *ngIf="mostrarMensaje" class="cuadro-mensaje">
+    <div class="cuadro-resaltado">{{ mensajeError }}</div>
+  </div>
+  <mat-card-content>
+    Información personal complementaria
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="País" formControlName="pais" (selectionChange)="paisChange($event.value)">
+            <mat-option *ngFor="let pais of paises" [value]="pais.Ubigeo_ID">
+              {{ pais.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['pais'].hasError('required')">
+            Su pais de residencia es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>            
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Dirección de residencia" formControlName="direccionSolicitante" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['direccionSolicitante'].hasError('required')">
+            La dirección es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Departamento" formControlName="departamento" (selectionChange)="departamentoChange($event.value)">
+            <mat-option *ngFor="let dpto of departamentos" [value]="dpto.Ubigeo_ID">
+              {{ dpto.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['departamento'].hasError('required')">
+            Su departamento es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>      
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Provincia" formControlName="provincia" (selectionChange)="provinciaChange($event.value)">
+            <mat-option *ngFor="let provincia of provincias" [value]="provincia.Ubigeo_ID">
+              {{ provincia.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['provincia'].hasError('required')">
+            Su provincia es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Distrito" formControlName="distrito">
+            <mat-option *ngFor="let distrito of distritos" [value]="distrito.Ubigeo_ID">
+              {{ distrito.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['distrito'].hasError('required')">
+            Su distrito es un dato <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Monto solicitado" formControlName="montoSolicitado" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['montoSolicitado'].hasError('required')">
+            El monto solicitado es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="registroPaso2Formulario.controls['montoSolicitado'].hasError('pattern')">
+            Debe ingresar solo números
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Plazo del préstamo" formControlName="plazoPrestamo">
+              <mat-option value="12">12</mat-option>
+              <mat-option value="18">18</mat-option>
+              <mat-option value="24">24</mat-option>
+              <mat-option value="36">36</mat-option>
+              <mat-option value="48">48</mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['plazoPrestamo'].hasError('required')">
+            El plazo es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Seguro de degravamen" formControlName="seguroDesgravamen">
+            <mat-option *ngFor="let seguro of seguros" [value]="seguro.ID">
+              {{ seguro.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['seguroDesgravamen'].hasError('required')">
+            El tipo de seguro es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Motivo del préstamo" formControlName="detalleMotivo" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['detalleMotivo'].hasError('required')">
+            El motivo del préstamo es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+            <mat-select placeholder="Estado civil" formControlName="estadoCivil" (selectionChange)="estadoCivilChange($event.value)">
+              <mat-option *ngFor="let estado of estadosCiviles" [value]="estado.ID">
+                {{ estado.Nombre }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="registroPaso2Formulario.controls['estadoCivil'].hasError('required')">
+              El estado civil es <strong>requerido</strong>
+            </mat-error>
+          </mat-form-field>
+      </div>
+      <div class="col">
+      </div>
+    </div>    
+
+    Datos de tu pareja
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Nombres" formControlName="nombresConyuge" maxlength="40" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['nombresConyuge'].hasError('required')">
+            Sus nombres son <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Apellido Paterno" formControlName="apellidoPaternoConyuge" maxlength="40" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['apellidoPaternoConyuge'].hasError('required')">
+            El apellido paterno de su cónyuge es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Apellido Materno" formControlName="apellidoMaternoConyuge" maxlength="40" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['apellidoMaternoConyuge'].hasError('required')">
+              El apellido materno de su cónyuge es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Tipo de documento" formControlName="tipoDocumentoConyuge">
+            <mat-option *ngFor="let documento of documentos" [value]="documento.ID">
+              {{ documento.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['tipoDocumentoConyuge'].hasError('required')">
+            Su tipo de documento de identidad es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Numero de documento" formControlName="numeroDocConyuge" maxlength="8" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['numeroDocConyuge'].hasError('required')">
+            El número de documento del cónyuge es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="registroPaso2Formulario.controls['numeroDocConyuge'].hasError('minlength')">
+            Debe ingresar un número de 8 digitos
+          </mat-error>
+          <mat-error *ngIf="registroPaso2Formulario.controls['numeroDocConyuge'].hasError('pattern')">
+            Debe ingresar solo números
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col"></div>
+    </div>
+
+    Información sobre tus ingresos
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Tipo de actividad" formControlName="tipoActividad">
+            <mat-option *ngFor="let actividad of actividades" [value]="actividad.ID">
+              {{ actividad.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['tipoActividad'].hasError('required')">
+            Su tipo de actividad es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Rubro de actividad" formControlName="rubroActividad">
+            <mat-option *ngFor="let rubro of rubrosActividades" [value]="rubro.ID">
+              {{ rubro.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['rubroActividad'].hasError('required')">
+            El rubro de su actividad es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Lugar de trabajo" formControlName="lugarTrabajo" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['lugarTrabajo'].hasError('required')">
+            El nombre de su lugar de trabajo es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+      </div>
+    </div>
+
+    Datos de tu cuenta
+
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Tipo de cuenta" formControlName="tipoCuenta">
+            <mat-option *ngFor="let tipoCuenta of tiposCuentas" [value]="tipoCuenta.ID">
+              {{ tipoCuenta.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['tipoCuenta'].hasError('required')">
+            Su tipo de cuenta bancaria es <strong>requerida</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <mat-select placeholder="Nombre del banco" formControlName="banco">
+            <mat-option *ngFor="let banco of bancos" [value]="banco.ID">
+              {{ banco.Nombre }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="registroPaso2Formulario.controls['banco'].hasError('required')">
+            El nombre de su banco es <strong>requerido</strong>
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Código interbancario" formControlName="cuentaInterbancaria" maxlength="20" required>
+          <mat-error *ngIf="registroPaso2Formulario.controls['cuentaInterbancaria'].hasError('required')">
+            Su código interbancario es <strong>requerido</strong>
+          </mat-error>
+          <mat-error *ngIf="registroPaso2Formulario.controls['cuentaInterbancaria'].hasError('minlength')">
+            Debe ingresar un número de 20 digitos
+          </mat-error>
+          <mat-error *ngIf="registroPaso2Formulario.controls['cuentaInterbancaria'].hasError('pattern')">
+            Debe ingresar solo números
+          </mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col">  
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col">
+        <mat-checkbox formControlName="esPEP" required>
+          <label>¿Eres una persona expuesta politicamente (PEP) o algun familiar lo es? *</label>
+        </mat-checkbox>
+      </div>
+      <div class="col">
+        <mat-form-field class="full-width">
+          <input matInput placeholder="Posición que ocupa" formControlName="cargoPEP">
+        </mat-form-field>
+      </div>      
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="primary" type="submit" (click)="registrarSegundoPaso()" [disabled]="!registroPaso2Formulario.valid">Siguiente</button>
+    <button mat-raised-button color="primary" type="submit" (click)="navegar()">Paso 2</button>      
+  </mat-card-actions>
+</mat-card>
+</form>
+</div>

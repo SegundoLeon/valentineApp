@@ -184,7 +184,9 @@ export class SolicitudPaso1Component implements OnInit {
                             // localStorageModel.solicitudCreditoId = registerFirstStepModelResult.codigoSolCredito;
                             // localStorageModel.step = 2;
                             // this.storageManager.savePermanentData(localStorageModel, LocalStoreManager.DBKEY_USER_DATA);
-                            //this.router.navigate([`/registerSecondStep/${registerFirstStepModelResult.codigoSolCredito}`]);
+                            this.router.navigate([`/solicitud/paso2/${registerFirstStepModelResult.codigoSolCredito}`]);
+                   
+                            
                         }, (error => {
                               console.error(error);
                               this.mostrarMensaje = true;
@@ -216,6 +218,10 @@ export class SolicitudPaso1Component implements OnInit {
 
     );
 
+  }
+
+  navegar() {
+    this.router.navigate(['/solicitud', 100]);
   }
 
 

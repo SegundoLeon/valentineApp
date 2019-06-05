@@ -7,6 +7,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Modulos importados
+import { SolicitudModule } from './solicitud/solicitud.module';
 import { SubastaModule } from './subasta/subasta.module';
 import { PagoModule } from './pago/pago.module';
 
@@ -34,7 +35,7 @@ import {
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule,
-    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule,
+    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule, SolicitudModule,
     MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatDividerModule, MatMenuModule,
     SubastaModule, PagoModule, MatDialogModule
   ],

@@ -1,4 +1,5 @@
 export const ParametroConstants = {
+  PAIS: 0,
   SEXO: 1,
   GRADOINSTRUCCION: 4,
   DESTINOCREDITO: 10,

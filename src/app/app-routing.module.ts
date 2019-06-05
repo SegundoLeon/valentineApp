@@ -10,6 +10,8 @@ import { SubastaAutomaticaComponent } from './subasta/subasta-automatica.compone
 import { PagoProcesadoComponent } from './pago/pago-procesado.component';
 import { RentabilidadListaComponent } from './pago/rentabilidad-lista.component';
 import { RentabilidadDetalleComponent } from './pago/rentabilidad-detalle.component';
+import { SolicitudPaso1Component } from './solicitud/solicitud-paso1.component';
+import { SolicitudPaso2Component } from './solicitud/solicitud-paso2.component';
 // Otros imports en el app-routing
 
 const routes: Routes = [
@@ -17,7 +19,10 @@ const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
   { path: 'acercade', component: AcercaDeComponent },
   { path: 'inversor', component: InversorComponent },
-  { path: 'solicitud', loadChildren: './solicitud/solicitud.module#SolicitudModule' },
+//  { path: 'solicitud', loadChildren: './solicitud/solicitud.module#SolicitudModule' },
+  { path: 'solicitud', component: SolicitudPaso1Component },
+  { path: 'solicitud/:id', component: SolicitudPaso2Component },
+  //{ path: 'solicitud/paso2/:id', component: SolicitudPaso2Component },
   { path: 'subasta/automatica', component: SubastaAutomaticaComponent },
   { path: 'subasta/procesada', component: SubastaProcesadaComponent },
   { path: 'pago/procesado', component: PagoProcesadoComponent },

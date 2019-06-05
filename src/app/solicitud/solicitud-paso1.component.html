@@ -7,7 +7,9 @@
     <div *ngIf="mostrarMensaje" class="cuadro-mensaje">
       <div class="cuadro-resaltado">{{ mensajeError }}</div>
     </div>
+
     <mat-card-content>
+      
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -19,17 +21,18 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Apellido Paterno" formControlName="apellidoParternoSolicitante" required>
+            <input matInput placeholder="Apellido Paterno" formControlName="apellidoParternoSolicitante" maxlength="40" required>
             <mat-error *ngIf="registroPaso1Formulario.controls['apellidoParternoSolicitante'].hasError('required')">
               Su apellido paterno es <strong>requerido</strong>
             </mat-error>
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Apellido Materno" formControlName="apellidoMaternoSolicitante" required>
+            <input matInput placeholder="Apellido Materno" formControlName="apellidoMaternoSolicitante" maxlength="40" required>
             <mat-error *ngIf="registroPaso1Formulario.controls['apellidoMaternoSolicitante'].hasError('required')">
               Su apellido materno es <strong>requerido</strong>
             </mat-error>
@@ -46,6 +49,7 @@
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -74,6 +78,7 @@
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
             <mat-form-field class="full-width">
@@ -99,6 +104,7 @@
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -112,6 +118,7 @@
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -133,6 +140,7 @@
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
@@ -159,6 +167,7 @@
           </mat-form-field>
         </div>
       </div>
+
       <div class="row">
         <div class="col">
           <mat-checkbox formControlName="aceptoTerminos" required>
@@ -166,9 +175,11 @@
           </mat-checkbox>
         </div>
       </div>
+
     </mat-card-content>
     <mat-card-actions>
       <button mat-raised-button color="primary" type="submit" (click)="registrarPrimerPaso()" [disabled]="!registroPaso1Formulario.valid">Siguiente</button>
+      <button mat-raised-button color="primary" type="submit" (click)="navegar()">Paso 2</button>      
     </mat-card-actions>
   </mat-card>
 </form>
