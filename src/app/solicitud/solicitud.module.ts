@@ -11,7 +11,10 @@ import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@a
 import { MatDividerModule, MatTableModule, MatFormFieldModule, MatCardModule } from '@angular/material';
 import { MatDialogModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
 import { MatButtonModule, MatRadioModule, MatIconModule } from '@angular/material';
-import { MatDatepickerModule, MatNativeDateModule, DateAdapter } from '@angular/material';
+import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+
+// Cambiando la localizacion para que el Datepicker funcione
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Modulos compartidos
 import { CompartidoModule } from '../compartido/compartido.module';
@@ -30,6 +33,7 @@ const routes: Routes = [
 //];
 
 @NgModule({
+  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-PE' }],
   declarations: [SolicitudPaso1Component, SolicitudPaso2Component, SolicitudPaso3Component],
   imports: [
     CommonModule, CompartidoModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
@@ -41,7 +45,7 @@ const routes: Routes = [
   exports: [RouterModule, SolicitudPaso1Component]
 })
 export class SolicitudModule {
-  constructor(private dateAdapter:DateAdapter<Date>) {
-    dateAdapter.setLocale('en-in'); // DD/MM/YYYY
-  }
+  //constructor(private dateAdapter:DateAdapter<Date>) {
+  //  dateAdapter.setLocale('en-in'); // DD/MM/YYYY
+  //}
  }

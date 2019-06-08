@@ -12,6 +12,7 @@ import { RentabilidadListaComponent } from './pago/rentabilidad-lista.component'
 import { RentabilidadDetalleComponent } from './pago/rentabilidad-detalle.component';
 import { SolicitudPaso1Component } from './solicitud/solicitud-paso1.component';
 import { SolicitudPaso2Component } from './solicitud/solicitud-paso2.component';
+import { SolicitudPaso3Component } from './solicitud/solicitud-paso3.component';
 // Otros imports en el app-routing
 
 const routes: Routes = [
@@ -22,6 +23,7 @@ const routes: Routes = [
 //  { path: 'solicitud', loadChildren: './solicitud/solicitud.module#SolicitudModule' },
   { path: 'solicitud', component: SolicitudPaso1Component },
   { path: 'solicitud/:id', component: SolicitudPaso2Component },
+  { path: 'solicitud/exit', component: SolicitudPaso3Component },
   //{ path: 'solicitud/paso2/:id', component: SolicitudPaso2Component },
   { path: 'subasta/automatica', component: SubastaAutomaticaComponent },
   { path: 'subasta/procesada', component: SubastaProcesadaComponent },

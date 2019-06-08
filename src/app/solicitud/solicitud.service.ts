@@ -10,6 +10,7 @@ import { CorreoRespuestaModel } from './correoRespuesta.model';
 import { Observable, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -30,8 +31,15 @@ export class SolicitudCreditoService {
           //tap(response => console.log(response)), map(response => response.toString),
   }
 
-  public manejoError(error: HttpErrorResponse) {
-    return throwError(error.message || 'Error del servidor');
+  private manejoError(respuestaError: HttpErrorResponse) {
+    if(respuestaError.error instanceof ErrorEvent) {
+      console.error('Error en el cliente: ', respuestaError.error.message);
+    } else {
+      console.error('Error en el servidor: ', respuestaError);
+    }
+    return throwError('Hay un problema con el servicio. Estaremos trabajando para resolver el problema.')
+    
+    //return throwError(error.message || 'Error del servidor');
   }
 
   // Verifica si el solicitante tiene alguna solicitud de credito pendiente
@@ -53,9 +61,9 @@ export class SolicitudCreditoService {
   }
 
   // Permite el segundo paso del proceso de solicitud de credito
-  public registerSecondStep(id: number, model: RegistroPaso2Model) {
+  public registerSecondStep(id: number, model: RegistroPaso2Model): Observable<any> {
     this.URL = `${this.URL_SOLICITUD}/${id}`;
-    return this.http.put(this.URL, model);
+    return this.http.put(this.URL, model).pipe(catchError(this.manejoError));
   }
 
 }

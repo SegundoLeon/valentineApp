@@ -51,11 +51,12 @@
   text-align: right;
 }
 
-input.monto-derecha::-webkit-outer-spin-button,
-input.monto-derecha::-webkit-inner-spin-button {
+input.sinincremento::-webkit-outer-spin-button,
+input.sinincremento::-webkit-inner-spin-button {
 display: none;
 }
 
 input.monto-derecha {
   -moz-appearance: textfield;
 }
+

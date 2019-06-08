@@ -22,7 +22,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Nombres" formControlName="nombreSolicitante" maxlength="40" required>
+            <input matInput placeholder="Nombres" formControlName="nombreSolicitante" maxlength="60" required>
             <mat-error *ngIf="registroPaso1Formulario.controls['nombreSolicitante'].hasError('required')">
               Sus nombres son <strong>requerido</strong>
             </mat-error>
@@ -30,7 +30,7 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Apellido Paterno" formControlName="apellidoParternoSolicitante" maxlength="40" required>
+            <input matInput placeholder="Apellido Paterno" formControlName="apellidoParternoSolicitante" maxlength="60" required>
             <mat-error *ngIf="registroPaso1Formulario.controls['apellidoParternoSolicitante'].hasError('required')">
               Su apellido paterno es <strong>requerido</strong>
             </mat-error>
@@ -41,7 +41,7 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Apellido Materno" formControlName="apellidoMaternoSolicitante" maxlength="40" required>
+            <input matInput placeholder="Apellido Materno" formControlName="apellidoMaternoSolicitante" maxlength="60" required>
             <mat-error *ngIf="registroPaso1Formulario.controls['apellidoMaternoSolicitante'].hasError('required')">
               Su apellido materno es <strong>requerido</strong>
             </mat-error>
@@ -49,13 +49,13 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            
+            <input matInput [matDatepicker]="picker" placeholder="Fecha de nacimiento" formControlName="fechaNacimiento" required>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>            
             <mat-datepicker #picker></mat-datepicker>
+
             <mat-error *ngIf="registroPaso1Formulario.controls['fechaNacimiento'].hasError('required')">
-                Su fecha de nacimiento es <strong>requerido</strong>
-              </mat-error>
+                Su fecha de nacimiento es un dato <strong>requerido</strong>
+            </mat-error>
           </mat-form-field>
         </div>
       </div>
@@ -75,7 +75,7 @@
         </div>
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Numero de documento" formControlName="numeroDocumento" type="number" maxlength="8" required>
+            <input matInput placeholder="Numero de documento" formControlName="numeroDocumento" class="sinincremento" maxlength="12" required>
             <mat-icon matSuffix>subtitles</mat-icon>
             <mat-error *ngIf="registroPaso1Formulario.controls['numeroDocumento'].hasError('required')">
               El número de documento es <strong>requerido</strong>
@@ -92,6 +92,7 @@
 
       <div class="row">
         <div class="col">
+          <div class="col">
             <mat-form-field class="full-width">
               <input matInput placeholder="Digito de verificacion" formControlName="digitoVerificacion" maxlength="1" required>
               <mat-error *ngIf="registroPaso1Formulario.controls['digitoVerificacion'].hasError('required')">
@@ -101,6 +102,7 @@
                 Ingrese un número
               </mat-error>
             </mat-form-field>
+          </div>
         </div>
         <div class="col">
           <mat-form-field class="full-width">
@@ -119,19 +121,17 @@
       <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Correo electronico" formControlName="correoElectronico" required>
+            <input matInput placeholder="Correo electronico" formControlName="correoElectronico"  maxlength="60" required [errorStateMatcher]="matcher">
             <mat-icon matSuffix>alternate_email</mat-icon>
             <mat-error *ngIf="registroPaso1Formulario.controls['correoElectronico'].hasError('required')">
               El correo electrónico es <strong>requerido</strong>
             </mat-error>
-            <mat-error *ngIf="registroPaso1Formulario.controls['correoElectronico'].hasError('pattern')">
+            <mat-error *ngIf="registroPaso1Formulario.controls['correoElectronico'].hasError('email') && 
+                             !registroPaso1Formulario.controls['correoElectronico'].hasError('required')">
               Ingrese un correo electrónico válido
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <input matInput placeholder="Numero celular" formControlName="numeroCelular" maxlength="9">
@@ -144,9 +144,12 @@
             </mat-error>
           </mat-form-field>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
-            <input matInput placeholder="Ingreso mensual" formControlName="ingresosMensuales" type="number" class="monto-derecha" >
+            <input matInput placeholder="Ingreso mensual" formControlName="ingresosMensuales" class="monto-derecha sinincremento" maxlength="6">
             <span matPrefix>S/&nbsp;</span>
             <span matSuffix>.00</span>
             <mat-error *ngIf="registroPaso1Formulario.controls['ingresosMensuales'].hasError('required')">
@@ -154,9 +157,6 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-
-      <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-select placeholder="Grado de instruccion" formControlName="gradoInstruccion">
@@ -169,6 +169,9 @@
             </mat-error>
           </mat-form-field>
         </div>
+      </div>
+
+      <div class="row">
         <div class="col">
           <mat-form-field class="full-width">
             <mat-select placeholder="Destino del credito" formControlName="destinoCredito">
@@ -181,15 +184,15 @@
             </mat-error>
           </mat-form-field>
         </div>
-      </div>
-      <br>
-      <div class="row">
         <div class="col">
+          <br>
           <mat-checkbox formControlName="aceptoTerminos" required>
             <label>Acepto los términos y condiciones de la plataforma *</label>
           </mat-checkbox>
-        </div>
+          </div>  
       </div>
+
+      <br>
 
     </mat-card-content>
     <mat-card-actions>

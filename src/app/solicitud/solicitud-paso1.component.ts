@@ -3,7 +3,8 @@ import { ParametroModel } from './parametro.model';
 import { ParametroService } from './parametro.service';
 import { EvaluacionService } from './evaluacion.service';
 import { RegistroPaso1Model } from './registroPaso1.model';
-import { FormControl, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { FormControl, FormGroupDirective, NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ErrorStateMatcher } from '@angular/material/core';
 import { SolicitudCreditoService } from './solicitud.service';
 import { ParametroConstants } from './parametro.constants';
 import { ReniecRespuestaModel } from './reniecRespuesta.model';
@@ -18,12 +19,21 @@ import { EtapasSolicitudCreditoConstants } from './etapasSolicitudCredito.consta
 import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 
+
+export class MyErrorStateMatcher implements ErrorStateMatcher {
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
+}
+
 @Component({
   selector: 'app-solicitud-paso1',
   templateUrl: './solicitud-paso1.component.html',
   styleUrls: ['./solicitud-paso1.component.scss']
 })
 export class SolicitudPaso1Component implements OnInit {
+  matcher = new MyErrorStateMatcher();
   documentos: ParametroModel[] = [];
   generos: ParametroModel[] = [];
   grados: ParametroModel[] = [];
@@ -52,17 +62,17 @@ export class SolicitudPaso1Component implements OnInit {
       nombreSolicitante: [null, [Validators.required]],
       apellidoParternoSolicitante: [null, Validators.required],
       apellidoMaternoSolicitante: [null, Validators.required],
-      fechaNacimiento: [null], 
-      tipoDocumento: [null],
+      fechaNacimiento: [null, [Validators.required]],
+      tipoDocumento: [null, [Validators.required]],
       numeroDocumento: [null, [Validators.required, Validators.minLength(8), Validators.pattern('[0-9]*')]],
       digitoVerificacion: [null, [Validators.required, Validators.pattern('[0-9]*')]],
-      genero: [null],
-      correoElectronico: [null, [Validators.required, Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$')]],
-      numeroCelular: [null, [Validators.pattern('[0-9]*')]],
-      ingresosMensuales: [null], 
-      gradoInstruccion: [null], 
-      destinoCredito: [null], 
-      aceptoTerminos: [null]
+      genero: [null, [Validators.required]],
+      correoElectronico: [null, [Validators.required, Validators.email]],
+      numeroCelular: [null, [Validators.required, Validators.pattern('[0-9]*')]],
+      ingresosMensuales: [null, [Validators.required]], 
+      gradoInstruccion: [null, [Validators.required]],
+      destinoCredito: [null, [Validators.required]],
+      aceptoTerminos: [null, [Validators.required]],
     });
   }
 
@@ -141,7 +151,7 @@ export class SolicitudPaso1Component implements OnInit {
             } else {
 
               // El cliente no tiene una solicitud o credito activo
-              // Se evalua el riesgo del ciente en nuestro modelo
+              // Se evalua el riesgo del ciente en nuestro modelo de riesgo
               var evaluacionConsultaModel: EvaluacionConsultaModel = new EvaluacionConsultaModel();
               evaluacionConsultaModel.NumeroDni = persona.NumeroDni;
               evaluacionConsultaModel.DigitoVerificacion = persona.DigitoVerificacion;
@@ -184,7 +194,7 @@ export class SolicitudPaso1Component implements OnInit {
                             // localStorageModel.solicitudCreditoId = registerFirstStepModelResult.codigoSolCredito;
                             // localStorageModel.step = 2;
                             // this.storageManager.savePermanentData(localStorageModel, LocalStoreManager.DBKEY_USER_DATA);
-                            this.router.navigate([`/solicitud/paso2/${registerFirstStepModelResult.codigoSolCredito}`]);
+                            this.router.navigate([`/solicitud/${registerFirstStepModelResult.codigoSolCredito}`]);
                    
                             
                         }, (error => {
@@ -213,16 +223,11 @@ export class SolicitudPaso1Component implements OnInit {
     }, (error => {
           this.mostrarMensaje = true;
           this.mensajeError = 'Los datos proporcionados no existen, verifique.';})
-
-
-
     );
-
   }
 
   navegar() {
-    this.router.navigate(['/solicitud', 100]);
+    this.router.navigate(['/solicitud', 60]);
   }
-
-
+  
 }

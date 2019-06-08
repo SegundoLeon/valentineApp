@@ -1,4 +1,6 @@
-export class RegistroPaso2Model {
+import { BaseModel } from './base.model';
+
+export class RegistroPaso2Model extends BaseModel {
   codigoSolCredito: number;
   direccionSolicitante: string;
   //codigoPostalSolicitante: string;
@@ -26,4 +28,8 @@ export class RegistroPaso2Model {
   cargoPEP: string;
   etapa: number;
   estado: number;
+
+  constructor() {
+    super();
+  }
 }
