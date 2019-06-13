@@ -2,9 +2,9 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { SolicitudPaso1Component } from './solicitud-paso1.component';
-import { SolicitudPaso2Component } from './solicitud-paso2.component';
-import { SolicitudPaso3Component } from './solicitud-paso3.component';
+import { SolicitudPaso1Component } from './registro/solicitud-paso1.component';
+import { SolicitudPaso2Component } from './registro/solicitud-paso2.component';
+import { SolicitudPaso3Component } from './registro/solicitud-paso3.component';
 
 // Modulos Angular Material
 import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
@@ -18,6 +18,13 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 
 // Modulos compartidos
 import { CompartidoModule } from '../compartido/compartido.module';
+
+// Servicios utilizados por este modulo
+import { SolicitudCreditoService } from './solicitud-credito.service';
+import { UbigeoService } from './ubigeo.service';
+import { ParametroService } from './parametro.service';
+import { EvaluacionService } from './evaluacion.service';
+
 
 const routes: Routes = [
   { path: '', component: SolicitudPaso1Component, }
@@ -33,7 +40,10 @@ const routes: Routes = [
 //];
 
 @NgModule({
-  providers: [{ provide: MAT_DATE_LOCALE, useValue: 'es-PE' }],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'es-PE' },
+    SolicitudCreditoService, UbigeoService, ParametroService, EvaluacionService
+    ],
   declarations: [SolicitudPaso1Component, SolicitudPaso2Component, SolicitudPaso3Component],
   imports: [
     CommonModule, CompartidoModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
@@ -42,9 +52,9 @@ const routes: Routes = [
     ReactiveFormsModule, MatNativeDateModule, MatButtonModule, MatRadioModule, MatDialogModule,
     MatIconModule
   ],
-  exports: [RouterModule, SolicitudPaso1Component]
+  exports: [RouterModule]
 })
-export class SolicitudModule {
+export class SolicitudCreditoModule {
   //constructor(private dateAdapter:DateAdapter<Date>) {
   //  dateAdapter.setLocale('en-in'); // DD/MM/YYYY
   //}

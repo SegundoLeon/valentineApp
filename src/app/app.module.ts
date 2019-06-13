@@ -2,12 +2,11 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
 // Modulos importados
-import { SolicitudModule } from './solicitud/solicitud.module';
+import { SolicitudCreditoModule } from './solicitud/solicitud-credito.module';
 import { SubastaModule } from './subasta/subasta.module';
 import { PagoModule } from './pago/pago.module';
 
@@ -23,8 +22,6 @@ import {
   MatSortModule, MatProgressSpinnerModule, MatDividerModule, MatMenuModule, MatDialogModule
 } from '@angular/material';
 
-// Servicios disponibles
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +32,7 @@ import {
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule,
-    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule, SolicitudModule,
+    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule, SolicitudCreditoModule,
     MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatDividerModule, MatMenuModule,
     SubastaModule, PagoModule, MatDialogModule
   ],

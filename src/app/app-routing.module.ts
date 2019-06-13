@@ -10,9 +10,9 @@ import { SubastaAutomaticaComponent } from './subasta/subasta-automatica.compone
 import { PagoProcesadoComponent } from './pago/pago-procesado.component';
 import { RentabilidadListaComponent } from './pago/rentabilidad-lista.component';
 import { RentabilidadDetalleComponent } from './pago/rentabilidad-detalle.component';
-import { SolicitudPaso1Component } from './solicitud/solicitud-paso1.component';
-import { SolicitudPaso2Component } from './solicitud/solicitud-paso2.component';
-import { SolicitudPaso3Component } from './solicitud/solicitud-paso3.component';
+import { SolicitudPaso1Component } from './solicitud/registro/solicitud-paso1.component';
+import { SolicitudPaso2Component } from './solicitud/registro/solicitud-paso2.component';
+import { SolicitudPaso3Component } from './solicitud/registro/solicitud-paso3.component';
 // Otros imports en el app-routing
 
 const routes: Routes = [

@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { ParametroModel } from './parametro.model';
-import { ParametroService } from './parametro.service';
-import { EvaluacionService } from './evaluacion.service';
-import { RegistroPaso1Model } from './registroPaso1.model';
+import { ParametroModel } from '../parametro.model';
+import { ParametroService } from '../parametro.service';
+import { EvaluacionService } from '../evaluacion.service';
+import { RegistroPaso1Model } from '../registroPaso1.model';
 import { FormControl, FormGroupDirective, NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
-import { SolicitudCreditoService } from './solicitud.service';
-import { ParametroConstants } from './parametro.constants';
-import { ReniecRespuestaModel } from './reniecRespuesta.model';
-import { ReniecConsultaModel } from './reniecConsulta.model';
-import { CorreoRespuestaModel } from './correoRespuesta.model';
-import { HistorialRespuestaModel } from './historialRespuesta.model';
+import { SolicitudCreditoService } from '../solicitud-credito.service';
+
+import { ParametroConstants } from '../parametro.constants';
+import { ReniecRespuestaModel } from '../reniecRespuesta.model';
+import { ReniecConsultaModel } from '../reniecConsulta.model';
+import { CorreoRespuestaModel } from '../correoRespuesta.model';
+import { HistorialRespuestaModel } from '../historialRespuesta.model';
 import { Router } from '@angular/router';
-import { EvaluacionConsultaModel } from './evaluacionConsulta.model';
-import { EvaluacionRespuestaModel } from './evaluacionRespuesta.model';
-import { EstadoSolicitudCreditoConstants } from './estadoSolicitudCredito.constants';
-import { EtapasSolicitudCreditoConstants } from './etapasSolicitudCredito.constants';
+import { EvaluacionConsultaModel } from '../evaluacionConsulta.model';
+import { EvaluacionRespuestaModel } from '../evaluacionRespuesta.model';
+import { EstadoSolicitudCreditoConstants } from '../estadoSolicitudCredito.constants';
+import { EtapasSolicitudCreditoConstants } from '../etapasSolicitudCredito.constants';
 import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
 

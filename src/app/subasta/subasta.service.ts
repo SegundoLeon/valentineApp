@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Utilitarios } from '../compartido/utilitarios';
 import { HostnameConstants } from '../compartido/constantes/hostname.constants';
-import { Subasta } from './subasta';
+import { SubastaModel } from './subasta.model';
 import { ReporteSubasta } from './reporteSubasta.model';
 
 @Injectable({
@@ -18,7 +18,7 @@ export class SubastaService {
     this.URL_SOLICITUD = `${this.URL_BASE}${this.ENDPOINT}`;
   }
 
-  public agregarSubasta(modelo: Subasta) {
+  public agregarSubasta(modelo: SubastaModel) {
     this.URL = `${this.URL_SOLICITUD}`;
     return this.http.post(this.URL, modelo);
   }

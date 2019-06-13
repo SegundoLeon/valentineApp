@@ -13,6 +13,10 @@ import { SolicitudPrestamoComponent } from './solicitud-prestamo.component';
 import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
 import { MatDividerModule, MatTableModule, MatFormFieldModule } from '@angular/material';
 
+// Servicios utilizados por este modulo
+import { ParticipacionService } from './participacion.service';
+import { SubastaService } from './subasta.service';
+
 const routes: Routes = [
   { path: '', component: SubastaAutomaticaComponent,
     children: [
@@ -23,6 +27,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
+  providers: [ ParticipacionService, SubastaService ],
   declarations: [
     SubastaProcesadaComponent, SubastaAutomaticaComponent, SolicitudListaComponent,
     SolicitudGeneralComponent, SolicitudSolicitudComponent, SolicitudEvaluacionComponent,

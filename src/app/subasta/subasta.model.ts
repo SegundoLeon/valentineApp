@@ -1,4 +1,4 @@
-export class Subasta {
+export class SubastaModel {
   codigoSubasta: number;
   montoASubastar: number;
   fechaInicio: string;

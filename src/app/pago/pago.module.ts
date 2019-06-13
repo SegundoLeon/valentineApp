@@ -9,6 +9,9 @@ import { RentabilidadDetalleComponent } from './rentabilidad-detalle.component';
 import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
 import { MatDividerModule, MatTableModule, MatFormFieldModule } from '@angular/material';
 
+// Servicios utilizados por este modulo
+import { PagoService } from './pago.service';
+
 const routes: Routes = [
   { path: '', component: PagoProcesadoComponent,
     children: [
@@ -21,11 +24,12 @@ const routes: Routes = [
 
 
 @NgModule({
+  providers: [ PagoService ],
   declarations: [PagoProcesadoComponent, RentabilidadListaComponent, RentabilidadDetalleComponent],
   imports: [
     CommonModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
     MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
   ],
-  exports: [RouterModule, PagoProcesadoComponent]
+  exports: [ RouterModule ]
 })
 export class PagoModule { }
