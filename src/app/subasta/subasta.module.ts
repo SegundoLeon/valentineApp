@@ -9,10 +9,6 @@ import { SolicitudSolicitudComponent } from './solicitud-solicitud.component';
 import { SolicitudEvaluacionComponent } from './solicitud-evaluacion.component';
 import { SolicitudPrestamoComponent } from './solicitud-prestamo.component';
 
-// Modulos Angular Material de subasta
-import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
-import { MatDividerModule, MatTableModule, MatFormFieldModule } from '@angular/material';
-
 // Servicios utilizados por este modulo
 import { ParticipacionService } from './participacion.service';
 import { SubastaService } from './subasta.service';
@@ -36,8 +32,6 @@ const routes: Routes = [
     ],
   imports: [
     CommonModule, RouterModule.forChild(routes), SharedModule
-    //MatDividerModule, MatTableModule,
-    //MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
   ],
   exports: [RouterModule]
 })
