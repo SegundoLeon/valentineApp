@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Utilitarios } from '../compartido/utilitarios';
-import { HostnameConstants } from '../compartido/constantes/hostname.constants';
+import { Utilitarios } from './../shared/utilitarios';
+import { HostnameConstants } from './../shared/constantes/hostname.constants';
 
 @Injectable({
   providedIn: 'root'

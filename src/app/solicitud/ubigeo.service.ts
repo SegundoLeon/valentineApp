@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
-import { HostnameConstants } from '../compartido/constantes/hostname.constants';
+import { HostnameConstants } from '../shared/constantes/hostname.constants';
 import { Observable, throwError } from 'rxjs';
 import { map, tap, catchError } from 'rxjs/operators';
 
 import { UbigeoModel } from './ubigeo.model';
-import { Utilitarios } from '../compartido/utilitarios';
+import { Utilitarios } from '../shared/utilitarios';
 
 @Injectable({
     providedIn: 'root'

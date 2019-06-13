@@ -9,13 +9,14 @@ import { SolicitudSolicitudComponent } from './solicitud-solicitud.component';
 import { SolicitudEvaluacionComponent } from './solicitud-evaluacion.component';
 import { SolicitudPrestamoComponent } from './solicitud-prestamo.component';
 
-// Modulos Angular Material
+// Modulos Angular Material de subasta
 import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
 import { MatDividerModule, MatTableModule, MatFormFieldModule } from '@angular/material';
 
 // Servicios utilizados por este modulo
 import { ParticipacionService } from './participacion.service';
 import { SubastaService } from './subasta.service';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', component: SubastaAutomaticaComponent,
@@ -34,8 +35,9 @@ const routes: Routes = [
     SolicitudPrestamoComponent
     ],
   imports: [
-    CommonModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
-    MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
+    CommonModule, RouterModule.forChild(routes), SharedModule
+    //MatDividerModule, MatTableModule,
+    //MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
   ],
   exports: [RouterModule]
 })

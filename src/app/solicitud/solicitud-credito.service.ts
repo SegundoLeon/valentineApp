@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
-import { Utilitarios } from '../compartido/utilitarios';
-import { HostnameConstants } from '../compartido/constantes/hostname.constants';
+import { Utilitarios } from '../shared/utilitarios';
+import { HostnameConstants } from '../shared/constantes/hostname.constants';
 import { RegistroPaso1Model } from './registroPaso1.model';
 import { RegistroPaso2Model } from './registroPaso2.model';
 import { ReniecConsultaModel } from './reniecConsulta.model';

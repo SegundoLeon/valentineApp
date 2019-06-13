@@ -6,18 +6,18 @@ import { SolicitudPaso1Component } from './registro/solicitud-paso1.component';
 import { SolicitudPaso2Component } from './registro/solicitud-paso2.component';
 import { SolicitudPaso3Component } from './registro/solicitud-paso3.component';
 
-// Modulos Angular Material
-import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
-import { MatDividerModule, MatTableModule, MatFormFieldModule, MatCardModule } from '@angular/material';
-import { MatDialogModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
-import { MatButtonModule, MatRadioModule, MatIconModule } from '@angular/material';
-import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
+// Modulos Angular Material de Solicitud-Credito
+//import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
+//import { MatDividerModule, MatTableModule, MatFormFieldModule, MatCardModule } from '@angular/material';
+//import { MatDialogModule, MatSelectModule, MatCheckboxModule } from '@angular/material';
+//import { MatButtonModule, MatRadioModule, MatIconModule } from '@angular/material';
+//import { MatDatepickerModule, MatNativeDateModule } from '@angular/material';
 
 // Cambiando la localizacion para que el Datepicker funcione
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 
 // Modulos compartidos
-import { CompartidoModule } from '../compartido/compartido.module';
+import { SharedModule } from '../shared/shared.module';
 
 // Servicios utilizados por este modulo
 import { SolicitudCreditoService } from './solicitud-credito.service';
@@ -46,11 +46,12 @@ const routes: Routes = [
     ],
   declarations: [SolicitudPaso1Component, SolicitudPaso2Component, SolicitudPaso3Component],
   imports: [
-    CommonModule, CompartidoModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
-    MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
-    MatCardModule, MatDatepickerModule, MatSelectModule, MatCheckboxModule, 
-    ReactiveFormsModule, MatNativeDateModule, MatButtonModule, MatRadioModule, MatDialogModule,
-    MatIconModule
+    CommonModule, SharedModule, RouterModule.forChild(routes)
+    //MatDividerModule, MatTableModule,
+    //MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,
+    //MatCardModule, MatDatepickerModule, MatSelectModule, MatCheckboxModule, 
+    //ReactiveFormsModule, MatNativeDateModule, MatButtonModule, MatRadioModule, MatDialogModule,
+    //MatIconModule
   ],
   exports: [RouterModule]
 })

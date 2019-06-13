@@ -6,11 +6,12 @@ import { RentabilidadListaComponent } from './rentabilidad-lista.component';
 import { RentabilidadDetalleComponent } from './rentabilidad-detalle.component';
 
 // Modulos Angular Material
-import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
-import { MatDividerModule, MatTableModule, MatFormFieldModule } from '@angular/material';
+//import { MatPaginatorModule, MatInputModule, MatProgressSpinnerModule } from '@angular/material'
+//import { MatDividerModule, MatTableModule, MatFormFieldModule } from '@angular/material';
 
 // Servicios utilizados por este modulo
 import { PagoService } from './pago.service';
+import { SharedModule } from '../shared/shared.module';
 
 const routes: Routes = [
   { path: '', component: PagoProcesadoComponent,
@@ -22,13 +23,13 @@ const routes: Routes = [
   },
 ];
 
-
 @NgModule({
   providers: [ PagoService ],
   declarations: [PagoProcesadoComponent, RentabilidadListaComponent, RentabilidadDetalleComponent],
   imports: [
-    CommonModule, RouterModule.forChild(routes), MatDividerModule, MatTableModule,
-    MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
+    CommonModule, RouterModule.forChild(routes), SharedModule
+    //MatDividerModule, MatTableModule,
+    //MatPaginatorModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule
   ],
   exports: [ RouterModule ]
 })
