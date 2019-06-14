@@ -10,9 +10,9 @@ const routes: Routes = [
   { path: 'inicio', component: InicioComponent },
   { path: 'acercade', component: AcercaDeComponent },
   { path: 'inversor', component: InversorComponent },
-  { path: 'solicitud', loadChildren: './solicitud/solicitud-credito.module#SolicitudCreditoModule' },
-  { path: 'subasta', loadChildren: './subasta/subasta.module#SubastaModule' },
-  { path: 'pago', loadChildren: './pago/pago.module#PagoModule' },
+  { path: 'solicitud', loadChildren: () => import('./solicitud/solicitud-credito.module').then(m => m.SolicitudCreditoModule) },
+  { path: 'subasta', loadChildren: () => import('./subasta/subasta.module').then(m => m.SubastaModule) },
+  { path: 'pago', loadChildren: () => import('./pago/pago.module').then(m => m.PagoModule) },
   { path: '**', component: NoEncontradoComponent }
 
 ];

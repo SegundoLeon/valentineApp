@@ -21,7 +21,7 @@ import { EstadoSolicitudCreditoConstants } from '../estadoSolicitudCredito.const
 import { EtapasSolicitudCreditoConstants } from '../etapasSolicitudCredito.constants';
 import { MatDialog } from '@angular/material';
 import { Location } from '@angular/common';
-import { validateConfig } from '@angular/router/src/config';
+//import { validateConfig } from '@angular/router/src/config';
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
   isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
