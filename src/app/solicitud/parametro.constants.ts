@@ -9,5 +9,6 @@ export const ParametroConstants = {
   RUBROACTIVIDAD: 26,
   TIPOCUENTA: 29,
   BANCOS: 32,
-  SEGURO: 37
+  SEGURO: 37,
+  ESTADOSOLICITUD: 40
 };

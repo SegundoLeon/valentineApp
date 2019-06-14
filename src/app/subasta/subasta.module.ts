@@ -13,9 +13,10 @@ import { SolicitudPrestamoComponent } from './solicitud-prestamo.component';
 import { ParticipacionService } from './participacion.service';
 import { SubastaService } from './subasta.service';
 import { SharedModule } from '../shared/shared.module';
+import { SubastaContenedorComponent } from './subasta-contenedor.component';
 
 const routes: Routes = [
-  { path: '', component: SubastaAutomaticaComponent,
+  { path: '', component: SubastaContenedorComponent,
     children: [
       { path: 'automatica', component: SubastaAutomaticaComponent },
       { path: 'procesada', component: SubastaProcesadaComponent }
@@ -28,7 +29,7 @@ const routes: Routes = [
   declarations: [
     SubastaProcesadaComponent, SubastaAutomaticaComponent, SolicitudListaComponent,
     SolicitudGeneralComponent, SolicitudSolicitudComponent, SolicitudEvaluacionComponent,
-    SolicitudPrestamoComponent
+    SolicitudPrestamoComponent, SubastaContenedorComponent
     ],
   imports: [
     CommonModule, RouterModule.forChild(routes), SharedModule

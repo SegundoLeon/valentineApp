@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
     <img src="assets/images/portada.jpg" style="width:100%;">
     <br><br>
     <div class="contenedor">
-      <button mat-raised-button color="primary" class="botonbanner" routerLink="/solicitud">
+      <button mat-raised-button color="primary" class="botonbanner" routerLink="/solicitud/evalua">
         Necesito un crédito
       </button>
       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

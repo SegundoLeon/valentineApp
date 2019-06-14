@@ -3,23 +3,29 @@
     VALENTINE&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <button mat-button routerLink="inicio">Inicio</button>
     <button mat-button routerLink="acercade">Acerca de</button>
-    <button mat-button routerLink="/solicitud">Solicitud</button>
+
+    <!--<button mat-button routerLink="/solicitud">Solicitud</button>-->
+    <button mat-button [matMenuTriggerFor]="menuSolicitud">Solicitud</button>
+    <mat-menu #menuSolicitud="matMenu">
+      <button mat-menu-item routerLink="solicitud/evalua">Registrar solicitud</button>
+      <button mat-menu-item routerLink="solicitud/list">Lista de solicitudes</button>
+    </mat-menu>
+
     <button mat-button [matMenuTriggerFor]="menuSubasta">Subasta</button>
     <mat-menu #menuSubasta="matMenu">
-      <button mat-menu-item routerLink="/subasta/automatica">Participaciones automáticas</button>
-      <button mat-menu-item routerLink="/subasta/procesada">Subastas procesadas</button>
+      <button mat-menu-item routerLink="subasta/automatica">Participaciones automáticas</button>
+      <button mat-menu-item routerLink="subasta/procesada">Subastas procesadas</button>
     </mat-menu>
+
     <button mat-button [matMenuTriggerFor]="menuPago">Pago</button>
     <mat-menu #menuPago="matMenu">
-      <button mat-menu-item routerLink="/pago/procesado">Pagos procesados</button>
-      <button mat-menu-item routerLink="/pago/rentabilidad">Rentabilidad anual</button>
+      <button mat-menu-item routerLink="pago/procesado">Pagos procesados</button>
+      <button mat-menu-item routerLink="pago/rentabilidad">Rentabilidad anual</button>
     </mat-menu>
   </mat-toolbar>
 
   <div class="marcoprincipal">
-
     <router-outlet></router-outlet>
-
   </div>
 </div>
 

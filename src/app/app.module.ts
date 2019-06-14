@@ -5,11 +5,6 @@ import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-// Modulos importados
-import { SolicitudCreditoModule } from './solicitud/solicitud-credito.module';
-import { SubastaModule } from './subasta/subasta.module';
-import { PagoModule } from './pago/pago.module';
-
 // Componentes del modulo principal AppModule
 import { InicioComponent } from './inicio/inicio.component';
 import { AcercaDeComponent } from './inicio/acerca-de.component';
@@ -32,9 +27,9 @@ import {
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule,
-    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule, SolicitudCreditoModule,
-    MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatDividerModule, MatMenuModule,
-    SubastaModule, PagoModule, MatDialogModule
+    MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule,
+    MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatDividerModule, 
+    MatMenuModule, MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]

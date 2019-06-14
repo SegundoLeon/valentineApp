@@ -6,12 +6,12 @@ import { PagoService } from './pago.service';
 import { PagoProcesadoComponent } from './pago-procesado.component';
 import { RentabilidadListaComponent } from './rentabilidad-lista.component';
 import { RentabilidadDetalleComponent } from './rentabilidad-detalle.component';
+import { PagoContenedorComponent } from './pago-contenedor.component';
 
 const routes: Routes = [
-  { path: '', component: PagoProcesadoComponent,
-    children: [
-      { path: 'pagoProcesado', component: PagoProcesadoComponent },
-      { path: 'rentabilidadLista', component: RentabilidadListaComponent },
+  { path: '', component: PagoContenedorComponent, children: [
+      { path: 'procesado', component: PagoProcesadoComponent },
+      { path: 'rentabilidad', component: RentabilidadListaComponent },
       { path: 'rentabilidadDetalle', component: RentabilidadDetalleComponent }
     ]
   },
@@ -19,7 +19,8 @@ const routes: Routes = [
 
 @NgModule({
   providers: [ PagoService ],
-  declarations: [PagoProcesadoComponent, RentabilidadListaComponent, RentabilidadDetalleComponent],
+  declarations: [PagoProcesadoComponent, RentabilidadListaComponent, 
+    RentabilidadDetalleComponent, PagoContenedorComponent],
   imports: [
     CommonModule, RouterModule.forChild(routes), SharedModule
   ],

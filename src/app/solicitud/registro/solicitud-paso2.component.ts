@@ -164,7 +164,7 @@ export class SolicitudPaso2Component implements OnInit {
         (result: EvaluacionRespuestaModel) => {
           if (result.Resultado === 'rechazado') {
             //this.storageManager.deleteData(); // Borra informacion del cookie
-            this.router.navigate([`/inicio`]); }
+            this.router.navigate([`/resultado`]); }
           else {
             // Paso la evaluacion de nuestro Modelo de Riesgos
             console.log("Evaluacion exitosa de la conyuge");
@@ -178,7 +178,7 @@ export class SolicitudPaso2Component implements OnInit {
                 //localStorageModel.solicitudCreditoId = this.id;
                 //localStorageModel.step = 3;
                 //this.storageManager.savePermanentData(localStorageModel, LocalStoreManager.DBKEY_USER_DATA);
-                this.router.navigate([`/solicitud/exito`]);
+                this.router.navigate([`/solicitud/resultado`]);
               }, error => console.error(error)
             );
 
@@ -191,7 +191,7 @@ export class SolicitudPaso2Component implements OnInit {
   }
 
   navegar() {
-    this.router.navigate(['/solicitud']);
+    this.router.navigate(['/solicitud/evalua']);
   }
 
 }

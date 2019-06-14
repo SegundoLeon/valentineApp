@@ -170,6 +170,7 @@ export class SolicitudPaso1Component implements OnInit {
                     this.mensajeError = 'Solicitud rechazada por Modelo de Riesgo';
                     //this.solicitudCreditoService.enviarMail(correoRespuesta).subscribe();
                     //this.router.navigate(['/notSuccessClips']);
+                    this.router.navigate(['/resultado']);
                 } else {
                     // Cliente aceptado por el Modelo de Riesgo
                     console.log('Solicitud aceptada por Modelo de Riesgo');
@@ -195,7 +196,7 @@ export class SolicitudPaso1Component implements OnInit {
                             // localStorageModel.solicitudCreditoId = registerFirstStepModelResult.codigoSolCredito;
                             // localStorageModel.step = 2;
                             // this.storageManager.savePermanentData(localStorageModel, LocalStoreManager.DBKEY_USER_DATA);
-                            this.router.navigate([`/solicitud/${registerFirstStepModelResult.codigoSolCredito}`]);
+                            this.router.navigate([`/solicitud/evalua/${registerFirstStepModelResult.codigoSolCredito}`]);
                    
                             
                         }, (error => {
@@ -228,7 +229,7 @@ export class SolicitudPaso1Component implements OnInit {
   }
 
   navegar() {
-    this.router.navigate(['/solicitud', 60]);
+    this.router.navigate(['/solicitud/evalua', 60]);
   }
   
 }

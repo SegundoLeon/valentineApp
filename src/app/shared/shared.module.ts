@@ -17,14 +17,16 @@ import {
   MatSelectModule,
   MatSortModule,
   MatTableModule,
-  MatToolbarModule
+  MatToolbarModule,
+  MatGridListModule
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 const modulosMaterial = [
   MatButtonModule, MatCardModule, MatCheckboxModule, MatDatepickerModule, MatDialogModule, MatDividerModule,
   MatFormFieldModule, MatIconModule, MatInputModule, MatNativeDateModule, MatPaginatorModule, MatProgressSpinnerModule,
-  MatRadioModule, MatSelectModule, MatSortModule, MatTableModule, MatToolbarModule, FormsModule, ReactiveFormsModule
+  MatRadioModule, MatSelectModule, MatSortModule, MatTableModule, MatToolbarModule, FormsModule, 
+  ReactiveFormsModule, MatGridListModule
 ];
 
 @NgModule({

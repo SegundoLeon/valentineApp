@@ -4,32 +4,17 @@ import { InicioComponent } from './inicio/inicio.component';
 import { AcercaDeComponent } from './inicio/acerca-de.component';
 import { InversorComponent } from './inicio/inversor.component';
 import { NoEncontradoComponent } from './inicio/no-encontrado.component';
-// Rutas internas de los modulos
-import { SubastaProcesadaComponent } from './subasta/subasta-procesada.component';
-import { SubastaAutomaticaComponent } from './subasta/subasta-automatica.component';
-import { PagoProcesadoComponent } from './pago/pago-procesado.component';
-import { RentabilidadListaComponent } from './pago/rentabilidad-lista.component';
-import { RentabilidadDetalleComponent } from './pago/rentabilidad-detalle.component';
-import { SolicitudPaso1Component } from './solicitud/registro/solicitud-paso1.component';
-import { SolicitudPaso2Component } from './solicitud/registro/solicitud-paso2.component';
-import { SolicitudPaso3Component } from './solicitud/registro/solicitud-paso3.component';
-// Otros imports en el app-routing
 
 const routes: Routes = [
   { path: '', redirectTo: '/inicio', pathMatch: 'full' },
   { path: 'inicio', component: InicioComponent },
   { path: 'acercade', component: AcercaDeComponent },
   { path: 'inversor', component: InversorComponent },
-//  { path: 'solicitud', loadChildren: './solicitud/solicitud.module#SolicitudModule' },
-  { path: 'solicitud', component: SolicitudPaso1Component },
-  { path: 'solicitud/:id', component: SolicitudPaso2Component },
-  { path: 'solicitud/exit', component: SolicitudPaso3Component },
-  //{ path: 'solicitud/paso2/:id', component: SolicitudPaso2Component },
-  { path: 'subasta/automatica', component: SubastaAutomaticaComponent },
-  { path: 'subasta/procesada', component: SubastaProcesadaComponent },
-  { path: 'pago/procesado', component: PagoProcesadoComponent },
-  { path: 'pago/rentabilidad', component: RentabilidadListaComponent },
+  { path: 'solicitud', loadChildren: './solicitud/solicitud-credito.module#SolicitudCreditoModule' },
+  { path: 'subasta', loadChildren: './subasta/subasta.module#SubastaModule' },
+  { path: 'pago', loadChildren: './pago/pago.module#PagoModule' },
   { path: '**', component: NoEncontradoComponent }
+
 ];
 
 @NgModule({
