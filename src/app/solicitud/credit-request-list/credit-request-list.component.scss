@@ -1,21 +1,25 @@
-.example-container {
-    display: flex;
-    flex-direction: column;
-    max-height: 500px;
-    min-width: 300px;
-  }
+/* Estilos de Valentine */
+.contenedor {
+  padding-left: 20px;
+  padding-right: 20px;
+}
   
-  .mat-table {
-    overflow: auto;
-    max-height: 500px;
-  }
-  
-  
-  .search-form mat-form-field {
-    width: 100%;
-  }
-  
-  .pagination-section {
-    margin-top: 1em;
-  }
-  
+.full-width {
+  width: 100%;
+}
+
+/* Estilos heredados */
+.search-form mat-form-field {
+  width: 97%;
+}
+
+.pagination-section {
+  margin-top: 1em;
+}
+
+.SINAPLICARexample-container {
+  display: flex;
+  flex-direction: column;
+  max-height: 500px;
+  min-width: 300px;
+}

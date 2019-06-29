@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseResponse, CreditApplication, CreditApplicationDTO,
          Parameter, SearchCreditApplicationDTO } from '../credit-request.model';
@@ -9,17 +9,21 @@ import { ParametroModel } from '../parametro.model';
 // Para levantar el problema del buscador y bandeja
 import { SolicitudRequest, SolicitudResponse, SolicitudResponseApp } from './../solicitud-credito-model';
 import { Solicitud } from '../solicitud-model';
+// Importaciones para la tabla y paginador de angular material
+import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
+
 
 @Component({
   selector: 'app-credit-request-list',
   templateUrl: './credit-request-list.component.html',
   styleUrls: ['./credit-request-list.component.scss'],
 })
-export class CreditRequestListComponent implements OnInit {
+export class CreditRequestListComponent implements OnInit, AfterViewInit {
   //public creditDestinationList: Parameter[];
-  public dataSource: Solicitud[];//CreditApplication[];
-  public dataSource2: SolicitudResponse[];
-  public displayedColumns: string[];
+  public dataSource = new MatTableDataSource<Solicitud>(); //Solicitud[];//CreditApplication[];
+  
+  //public dataSource2: SolicitudResponse[];
+  public displayedColumns: string[] = ['code', 'name', 'documentNumber', 'amount', 'date', 'period', 'status', 'penTea', 'finalTea', 'operations'];
   public currentPage: number =  1;
   public numPages: number[] = [];
   public pageSize: number = 10;
@@ -31,16 +35,23 @@ export class CreditRequestListComponent implements OnInit {
   public destinosSolicitud: ParametroModel[] = [];
   public estadosSolicitud: ParametroModel[] = [];
 
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+
   constructor(private router: Router, private solicitudCreditoService: SolicitudCreditoService, 
               private parametroService: ParametroService) {
-    this.displayedColumns = [];
-    this.dataSource = [];
-    this.dataSource2 = [];
+    //this.displayedColumns = [];
+    //this.dataSource = [];
+    //this.dataSource2 = [];
+    
   }
 
   ngOnInit() {
     this.cargarCombos();
     this.search(this.currentPage);
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
   }
 
   public goEdit(application: CreditApplication): void {
@@ -65,13 +76,11 @@ export class CreditRequestListComponent implements OnInit {
     this.solicitudCreditoService
       .getCreditApplication(this.solicitud)
       .subscribe((response: Solicitud[]) => {
-        this.dataSource = response;
-        this.displayedColumns = Object.keys(this.dataSource[0]);
-        this.displayedColumns.push('operations');
-        console.log('antes del this.displayedColumns');
-        console.log(this.displayedColumns);
+        this.dataSource.data = response; // response.data;
+        //this.displayedColumns = Object.keys(this.dataSource[0]);
+        //this.displayedColumns.push('operations');
         this.total = 20;//response.total;
-        this.numPages = this.calculateNumPages(this.total, this.pageSize);
+        //this.numPages = this.calculateNumPages(this.total, this.pageSize);
         console.log(this.numPages);
       });
       

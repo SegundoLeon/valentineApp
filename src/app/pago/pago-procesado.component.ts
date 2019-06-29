@@ -1,8 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 // Importacion Angular Material
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
 
 export interface UserData {
   id: string;
