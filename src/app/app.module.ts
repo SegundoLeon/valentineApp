@@ -12,10 +12,16 @@ import { InversorComponent } from './inicio/inversor.component';
 import { NoEncontradoComponent } from './inicio/no-encontrado.component';
 
 // Modulos de Angular Material
-import {
-  MatToolbarModule, MatButtonModule, MatTableModule, MatFormFieldModule, MatPaginatorModule,
-  MatSortModule, MatProgressSpinnerModule, MatDividerModule, MatMenuModule, MatDialogModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
+import { MatToolbarModule } from '@angular/material/toolbar';
 
 @NgModule({
   declarations: [

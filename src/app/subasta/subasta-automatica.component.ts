@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ParticipacionService } from './participacion.service';
 import { ReporteSubastaAutomatica } from './reporteSubastaAutomatica.model';
 // Importacion Angular Material
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-subasta-automatica',

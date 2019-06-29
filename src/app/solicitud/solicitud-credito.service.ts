@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse, HttpParams, HttpHeaders } from '@angular/common/http';
+import { Router } from '@angular/router';
+import { HttpClient, HttpErrorResponse, HttpResponse, HttpResponseBase, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Utilitarios } from '../shared/utilitarios';
 import { HostnameConstants } from '../shared/constantes/hostname.constants';
 import { RegistroPaso1Model } from './registroPaso1.model';
@@ -7,15 +8,16 @@ import { RegistroPaso2Model } from './registroPaso2.model';
 import { ReniecConsultaModel } from './reniecConsulta.model';
 import { ReniecRespuestaModel } from './reniecRespuesta.model';
 import { CorreoRespuestaModel } from './correoRespuesta.model';
-import { Observable, throwError } from 'rxjs';
-import { map, tap, catchError } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { map, take, catchError } from 'rxjs/operators';
 
-import { BaseResponse, CreditApplication, CreditApplicationDTO, DetailProfitability,
+import { SolicitudRequest, SolicitudResponse, SolicitudResponseApp, Lista } from './solicitud-credito-model';
+
+import { BaseResponse, CreditApplication, DetailProfitability,  //CreditApplicationDTO
   DetailProfitabilityRequest, DetailProfitabilityResponse, Parameter,
   ParameterDTO, Profitability, ProfitabilityDTO,
   SearchCreditApplicationDTO, SolicitudCredito, SolicitudCreditoRequest, UbigeoDTO} from './credit-request.model';
-
-
+import { Solicitud, SolicitudAdapter } from './solicitud-model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,14 +28,14 @@ export class SolicitudCreditoService {
   private UBIGEO = 'T_Ubigeo';
   private INGRESO = 'T_Ingreso';
   private ARCHIVO = 'T_Archivo';
-
-
   private URL_BASE = Utilitarios.crearURLSolicitud(HostnameConstants.VALENTINE_WEBAPI.host);
   private URL_SOLICITUD: string;
   private URL: string;
 
-  constructor(private http: HttpClient) {
+  constructor(private router: Router, private http: HttpClient,
+              private solicitudAdapter: SolicitudAdapter) {
     this.URL_SOLICITUD = `${this.URL_BASE}${this.SOLICITUDCREDITO}`;
+
   }
 
   // Simula validar datos en la RENIEC
@@ -76,11 +78,27 @@ export class SolicitudCreditoService {
     return this.http.put(this.URL, model).pipe(catchError(this.manejoError));
   }
 
-  // Utilizadas en credit-request
-
-  getCreditApplication(creditApplication: SearchCreditApplicationDTO) {
+  getCreditApplication(solicitudRequest: SolicitudRequest): Observable<Solicitud[]> {
     this.URL = `${this.URL_SOLICITUD}/SearchSolicitudCredito`;
-    return this.http.post(this.URL, creditApplication);
+    return this.http.post<any[]>(this.URL, solicitudRequest).pipe(
+      map(res => res['data'].map(item => this.solicitudAdapter.adapt(item))),
+    );
   }
+
+  /*
+  getCreditApplication(solicitudRequest: SolicitudRequest): Observable<Solicitud[]> {
+    this.URL = `${this.URL_SOLICITUD}/SearchSolicitudCredito`;
+    return this.http.post<any[]>(this.URL, solicitudRequest).pipe(
+      map((rpta: any[]) => rpta.map(item => this.solicitudAdapter.adapt(item))),
+      );
+  }
+*/
+
+
+
+  public goEdit(application: CreditApplication): void {
+    this.router.navigate(['credit-application/edit', application.code, 'general']);
+  }
+
 
 }

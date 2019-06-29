@@ -20,14 +20,14 @@
           <mat-grid-tile>
             <mat-form-field>
               <mat-select placeholder="Estado" [(ngModel)]="solicitud.EstadoId">
-                <mat-option *ngFor="let item of estadosCredito" [value]="item.id">{{ item.name }}</mat-option>
+                <mat-option *ngFor="let estado of estadosSolicitud" [value]="estado.ID">{{ estado.Nombre }}</mat-option>
               </mat-select>
             </mat-form-field>
           </mat-grid-tile>
           <mat-grid-tile>
             <mat-form-field>
               <mat-select placeholder="Destino de crédito" [(ngModel)]="solicitud.DestinoCreditoId">
-                <mat-option *ngFor="let item of destinosCredito" [value]="item.id">{{ item.name }}</mat-option>
+                <mat-option *ngFor="let destino of destinosSolicitud" [value]="destino.ID">{{ destino.Nombre }}</mat-option>
               </mat-select>
             </mat-form-field>
           </mat-grid-tile>
@@ -51,7 +51,6 @@
         </mat-grid-list>
       </div>
     </div>
-
 
     <div class="example-container mat-elevation-z8">
       <mat-table #table [dataSource]="dataSource">
@@ -109,9 +108,11 @@
             </div>
           </mat-cell>
         </ng-container>
+
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
       </mat-table>
+
       <nav class="pagination-section" aria-label="Page navigation example" *ngIf="numPages.length > 1">
         <ul class="pagination justify-content-end">
           <li class="page-item" *ngFor="let page of numPages; let i = index;" [class.active]="currentPage === page">

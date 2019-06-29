@@ -19,7 +19,7 @@ import { EvaluacionConsultaModel } from '../evaluacionConsulta.model';
 import { EvaluacionRespuestaModel } from '../evaluacionRespuesta.model';
 import { EstadoSolicitudCreditoConstants } from '../estadoSolicitudCredito.constants';
 import { EtapasSolicitudCreditoConstants } from '../etapasSolicitudCredito.constants';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Location } from '@angular/common';
 //import { validateConfig } from '@angular/router/src/config';
 

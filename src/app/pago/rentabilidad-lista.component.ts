@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { PagoService } from './pago.service';
 import { ReporteRentabilidad } from './reporteRentabilidad.model';
-import { MatPaginator, MatSort, MatTableDataSource } from '@angular/material';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 
 @Component({
   selector: 'app-rentabilidad-lista',

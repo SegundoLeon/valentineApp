@@ -6,6 +6,9 @@ import { SolicitudCreditoService } from './../solicitud-credito.service';
 import { ParametroService } from './../parametro.service';
 import { ParametroConstants } from '../parametro.constants';
 import { ParametroModel } from '../parametro.model';
+// Para levantar el problema del buscador y bandeja
+import { SolicitudRequest, SolicitudResponse, SolicitudResponseApp } from './../solicitud-credito-model';
+import { Solicitud } from '../solicitud-model';
 
 @Component({
   selector: 'app-credit-request-list',
@@ -14,13 +17,14 @@ import { ParametroModel } from '../parametro.model';
 })
 export class CreditRequestListComponent implements OnInit {
   //public creditDestinationList: Parameter[];
-  public dataSource: CreditApplication[];
+  public dataSource: Solicitud[];//CreditApplication[];
+  public dataSource2: SolicitudResponse[];
   public displayedColumns: string[];
   public currentPage: number =  1;
   public numPages: number[] = [];
   public pageSize: number = 10;
   public total: number;
-  public solicitud: SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
+  public solicitud: SolicitudRequest = new SolicitudRequest(); //SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
   //public statusList: Parameter[];
 
   // los combos del buscador 
@@ -31,6 +35,7 @@ export class CreditRequestListComponent implements OnInit {
               private parametroService: ParametroService) {
     this.displayedColumns = [];
     this.dataSource = [];
+    this.dataSource2 = [];
   }
 
   ngOnInit() {
@@ -54,18 +59,22 @@ export class CreditRequestListComponent implements OnInit {
     this.currentPage = currentPage;
     this.solicitud.Paginacion.Page = currentPage;
     this.solicitud.Paginacion.PageSize = this.pageSize;
-    console.log(this.solicitud);
+
+    //this.solicitudCreditoService.getCreditApplication(this.solicitud);    
+
     this.solicitudCreditoService
       .getCreditApplication(this.solicitud)
-      .subscribe((response: BaseResponse<CreditApplication>) => {
-        this.dataSource = response.data;
+      .subscribe((response: Solicitud[]) => {
+        this.dataSource = response;
         this.displayedColumns = Object.keys(this.dataSource[0]);
         this.displayedColumns.push('operations');
-        console.log(response);
-        this.total = response.total;
+        console.log('antes del this.displayedColumns');
+        console.log(this.displayedColumns);
+        this.total = 20;//response.total;
         this.numPages = this.calculateNumPages(this.total, this.pageSize);
         console.log(this.numPages);
       });
+      
   }
 
   private calculateNumPages(total: number, size: number): number[] {
