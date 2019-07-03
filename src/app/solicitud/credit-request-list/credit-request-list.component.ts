@@ -35,6 +35,8 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
   public destinosSolicitud: ParametroModel[] = [];
   public estadosSolicitud: ParametroModel[] = [];
 
+  public estaCargando = false;
+
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
   constructor(private router: Router, private solicitudCreditoService: SolicitudCreditoService, 
@@ -71,7 +73,7 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
     this.solicitud.Paginacion.PageSize = this.pageSize;
 
     //this.solicitudCreditoService.getCreditApplication(this.solicitud);    
-
+    this.estaCargando = true;
     this.solicitudCreditoService
       .getCreditApplication(this.solicitud)
       .subscribe((response: Solicitud[]) => {
@@ -80,9 +82,8 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
         //this.displayedColumns.push('operations');
         this.total = 20;//response.total;
         //this.numPages = this.calculateNumPages(this.total, this.pageSize);
-        console.log(this.numPages);
-      });
-      
+        this.estaCargando = false;
+      });      
   }
 
   private calculateNumPages(total: number, size: number): number[] {
