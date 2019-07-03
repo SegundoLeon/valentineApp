@@ -17,6 +17,7 @@ import { SolicitudCreditoService } from './solicitud-credito.service';
 import { UbigeoService } from './ubigeo.service';
 import { ParametroService } from './parametro.service';
 import { EvaluacionService } from './evaluacion.service';
+import { ArchivoService } from './archivo.service';
 import { SolicitudCreditoContenedorComponent } from './solicitud-credito-contenedor.component';
 
 const routes: Routes = [
@@ -24,13 +25,14 @@ const routes: Routes = [
       { path: 'evalua', component: SolicitudPaso1Component },
       { path: 'evalua/:id', component: SolicitudPaso2Component },
       { path: 'list', component: CreditRequestListComponent },
-      { path: 'resultado', component: SolicitudPaso3Component }
+      { path: 'resultado', component: SolicitudPaso3Component },
+      { path: 'detail/:id', loadChildren: () => import('./credit-detail/credit-detail.module').then(m => m.CreditDetailModule) }
     ]
   }];
 
 @NgModule({
   providers: [
-    SolicitudCreditoService, UbigeoService, ParametroService, EvaluacionService,
+    SolicitudCreditoService, UbigeoService, ParametroService, EvaluacionService, ArchivoService,
     { provide: MAT_DATE_LOCALE, useValue: 'es-PE' }
     ],
   declarations: [

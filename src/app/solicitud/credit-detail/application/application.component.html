@@ -1,0 +1,89 @@
+<div class="form-general">
+    <div class="information-form">
+      <h3>Datos de la solicitud</h3>
+      <mat-grid-list cols="2" rowHeight='5em'>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Monto solicitado(S/)" [(ngModel)]="solicitud.MontoSolicitado">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Destino de crédito" [(ngModel)]="solicitud.DestinoCreditoId">
+              <mat-option *ngFor="let item of creditDestinationList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2">
+          <mat-form-field>
+            <textarea disabled matInput placeholder="Detalles del motivo del préstamo" [(ngModel)]="solicitud.DetalleMotivo"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Plazo del préstamo(meses)" [(ngModel)]="solicitud.PrestamoPlazo">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Seguro de desgravamen" [(ngModel)]="solicitud.SeguroDesgravamenId">
+              <mat-option *ngFor="let item of seguroDesgravamenList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <label>¿Es una persona politicamente expuesta (PEP) o familiar de una?</label>
+          <mat-radio-group [(ngModel)]="solicitud.EsPep">
+            <mat-radio-button disabled [value]="true">Si</mat-radio-button>
+            <mat-radio-button disabled [value]="false">No</mat-radio-button>
+          </mat-radio-group>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <textarea disabled matInput placeholder="Posición que ocupa" [(ngModel)]="solicitud.cargoPep"></textarea>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+      <h3>Ingreso y cuenta bancaria</h3>
+      <mat-grid-list cols="2" rowHeight='5em'>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Área de actividad" [(ngModel)]="solicitud.AreaActividadId">
+              <mat-option *ngFor="let item of activityAreaList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field>
+              <mat-select disabled placeholder="Ocupacion" [(ngModel)]="solicitud.OcupacionId">
+                <mat-option *ngFor="let item of jobList" [value]="item.id">{{ item.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Lugar de trabajo" [(ngModel)]="solicitud.LugarTrabajo">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select [disabled]="!formularios.enabled"  placeholder="Banco donde tienes tu cuenta" [(ngModel)]="solicitud.NombreEntidadId">
+              <mat-option *ngFor="let item of bankList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+            <mat-form-field>
+              <mat-select [disabled]="!formularios.enabled" placeholder="Tipo de cuenta" [(ngModel)]="solicitud.TipoCuentaId">
+                <mat-option *ngFor="let item of typeAccountList" [value]="item.id">{{ item.name }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile>
+              <mat-form-field>
+                <input [disabled]="!formularios.enabled" matInput placeholder="Codigo Interbancario" [(ngModel)]="solicitud.CodigoInterbancario">
+              </mat-form-field>
+            </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>

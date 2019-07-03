@@ -1,9 +1,10 @@
+// DTO (Data Table Object)
 export class Parameter {
     id: number;
     name: string;
     parent: number;
   }
-  
+   
   export class ParameterDTO {
     ID: number;
     Nombre: string;
@@ -40,6 +41,7 @@ export class Parameter {
     TeaFinal: number;
   }
   
+  // Utilizado para mostrar la lista de solicitudes de credito
   export class SearchCreditApplicationDTO {
     NumeroDocumento: string = '';
     Solicitante: string = '';

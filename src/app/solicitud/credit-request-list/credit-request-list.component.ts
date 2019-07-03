@@ -1,13 +1,12 @@
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseResponse, CreditApplication, CreditApplicationDTO,
-         Parameter, SearchCreditApplicationDTO } from '../credit-request.model';
+         Parameter, SearchCreditApplicationDTO } from '../credit-application.model';
 import { SolicitudCreditoService } from './../solicitud-credito.service';
 import { ParametroService } from './../parametro.service';
 import { ParametroConstants } from '../parametro.constants';
 import { ParametroModel } from '../parametro.model';
-// Para levantar el problema del buscador y bandeja
-import { SolicitudRequest, SolicitudResponse, SolicitudResponseApp } from './../solicitud-credito-model';
+
 import { Solicitud } from '../solicitud-model';
 // Importaciones para la tabla y paginador de angular material
 import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
@@ -23,12 +22,13 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
   public dataSource = new MatTableDataSource<Solicitud>(); //Solicitud[];//CreditApplication[];
   
   //public dataSource2: SolicitudResponse[];
+  //nombre de las columnas del conjunto de datos a mostrar en la tabla
   public displayedColumns: string[] = ['code', 'name', 'documentNumber', 'amount', 'date', 'period', 'status', 'penTea', 'finalTea', 'operations'];
   public currentPage: number =  1;
   public numPages: number[] = [];
   public pageSize: number = 10;
   public total: number;
-  public solicitud: SolicitudRequest = new SolicitudRequest(); //SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
+  public solicitud: SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
   //public statusList: Parameter[];
 
   // los combos del buscador 
@@ -55,8 +55,7 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
   }
 
   public goEdit(application: CreditApplication): void {
-    this.router
-        .navigate(['credit-application/edit', application.code, 'general']);
+    this.router.navigate(['solicitud/detail', application.code, 'general']);
   }
 
   private cargarCombos() {

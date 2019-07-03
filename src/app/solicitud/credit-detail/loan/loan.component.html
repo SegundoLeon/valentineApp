@@ -1,0 +1,99 @@
+<div class="form-general">
+  <div class="information-form">
+    <h3>Datos del préstamo</h3>
+    <mat-grid-list class="loan-info" cols="5" rowHeight='4em'>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input disabled matInput [matDatepicker]="datebirth" placeholder="Fecha de inicio" [(ngModel)]="solicitud.PrestamoFechaInicio">
+          <mat-datepicker-toggle matSuffix [for]="datebirth"></mat-datepicker-toggle>
+          <mat-datepicker #datebirth></mat-datepicker>
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input disabled matInput placeholder="TEA final(%)" [(ngModel)]="solicitud.PrestamoTeaFinal">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input disabled matInput placeholder="TEM final(%)" [(ngModel)]="solicitud.PrestamoTemFinal">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input disabled matInput placeholder="Plazo(meses)" [(ngModel)]="solicitud.PlazoPrestamo">
+        </mat-form-field>
+      </mat-grid-tile>
+      <mat-grid-tile>
+        <mat-form-field>
+          <input disabled matInput placeholder="Número. Instruc" [(ngModel)]="solicitud.PrestamoNumeroInstruccion">
+        </mat-form-field>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+  <div class="table">
+    <h3>Plan de pagos</h3>
+    <div class="example-container mat-elevation-z8">
+      <mat-table #table [dataSource]="dataSource">
+        <!-- id Column -->
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef> N° </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{ item.id }} </mat-cell>
+        </ng-container>
+        <!-- amount Column -->
+        <ng-container matColumnDef="amount">
+          <mat-header-cell *matHeaderCellDef> Monto </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.amount}} </mat-cell>
+        </ng-container>
+        <!-- expiryDate -->
+        <ng-container matColumnDef="expiryDate">
+          <mat-header-cell *matHeaderCellDef> Vencimiento </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.expiryDate | date:'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+        <!-- status Column -->
+        <ng-container matColumnDef="status">
+          <mat-header-cell *matHeaderCellDef> Estado </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.status}} </mat-cell>
+        </ng-container>
+        <!-- fee Column -->
+        <ng-container matColumnDef="fee">
+          <mat-header-cell *matHeaderCellDef> Cuota Original </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.fee}} </mat-cell>
+        </ng-container>
+        <!-- interest Column -->
+        <ng-container matColumnDef="interest">
+          <mat-header-cell *matHeaderCellDef> Interés morat.  </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.interest}} </mat-cell>
+        </ng-container>
+        <!-- expense Column -->
+        <ng-container matColumnDef="expense">
+          <mat-header-cell *matHeaderCellDef> Gastos Adm. </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.expense}} </mat-cell>
+        </ng-container>
+        <!-- payment Column -->
+        <ng-container matColumnDef="payment">
+          <mat-header-cell *matHeaderCellDef> Pago</mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.payment}} </mat-cell>
+        </ng-container>
+        <!-- paymentDate Column -->
+        <ng-container matColumnDef="paymentDate">
+          <mat-header-cell *matHeaderCellDef> Fecha de pago </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.paymentDate | date:'dd/MM/yyyy'}} </mat-cell>
+        </ng-container>
+        <!-- arrears Column -->
+        <ng-container matColumnDef="arrears">
+          <mat-header-cell *matHeaderCellDef> Atraso (días) </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.arrears}} </mat-cell>
+        </ng-container>
+        <!-- debt Column -->
+        <ng-container matColumnDef="debt">
+          <mat-header-cell *matHeaderCellDef> Deuda </mat-header-cell>
+          <mat-cell *matCellDef="let item"> {{item.debt}} </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+      </mat-table>
+    </div>
+  </div>
+</div>
+  

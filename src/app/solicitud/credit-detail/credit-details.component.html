@@ -1,0 +1,25 @@
+<div class="contenedor">
+   <nav mat-tab-nav-bar>
+        <a mat-tab-link
+        *ngFor="let link of navLinks"
+        [routerLink]="link.path"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive">
+           {{link.label}}
+     </a>
+  </nav>
+  <h4>Solicitud de crédito N° {{ documentId  }}</h4>
+  <div class="tab-section">
+
+     <div class="content" *ngIf="showChildView">
+         <router-outlet></router-outlet>
+     </div>
+
+     <div class="actions">
+        <mat-list>
+           <mat-list-item> <button class="botondetail" mat-raised-button color="primary" (click)="save()">Grabar</button> </mat-list-item>
+           <mat-list-item> <button class="botondetail" mat-raised-button color="primary" (click)="exit()">Salir</button> </mat-list-item>
+        </mat-list>
+     </div>
+  </div>
+</div>

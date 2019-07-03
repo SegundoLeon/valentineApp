@@ -1,0 +1,126 @@
+<div class="evaluation">
+    <div class="evaluation-section">
+      <div class="column">
+        <table class="full-width">
+          <tr>
+            <td><h4>Datos de la evaluación</h4></td>
+          </tr>
+          <tr>
+            <td>Posee DNI válido:</td>
+            <td>
+              <mat-radio-group [(ngModel)]="solicitud.DniVerificado">
+                <mat-radio-button disabled [value]="true">Si</mat-radio-button>
+                <mat-radio-button disabled [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </td>
+          </tr>
+          <tr>
+            <td>Ingresos verificados:</td>
+            <td>
+              <mat-radio-group [(ngModel)]="solicitud.IngresoVerificado">
+                <mat-radio-button disabled [value]="true">Si</mat-radio-button>
+                <mat-radio-button disabled [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </td>
+          </tr>
+          <tr>
+            <td>Direccion verificada:</td>
+            <td>
+              <mat-radio-group [(ngModel)]="solicitud.DireccionVerificado">
+                <mat-radio-button disabled [value]="true">Si</mat-radio-button>
+                <mat-radio-button disabled [value]="false">No</mat-radio-button>
+              </mat-radio-group>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <mat-form-field>
+                <input disabled matInput placeholder="Puntuación buró" [(ngModel)]="solicitud.PuntuacionBuro">
+              </mat-form-field>
+            </td>
+            <td colspan="2">
+              <mat-form-field>
+                <input disabled matInput placeholder="Perfil asignado" [(ngModel)]="solicitud.PerfilAsignadoNombre">
+              </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <mat-form-field>
+                <input disabled matInput placeholder="TEA asignada(%)" [(ngModel)]="solicitud.TeaAsignada">
+              </mat-form-field>
+            </td>
+          </tr>
+        </table>
+      </div>
+      <div class="column">
+        <table class="full-width">
+          <tr>
+            <td colspan="2"><h4>Contrato de préstamo</h4></td>
+          </tr>
+          <tr>
+            <td colspan="2">
+                Carga contrato de préstamo
+                <input [disabled]="!formularios.enabled" type="file" (change)="onFileUpload($event)" accept="*" />
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <h4>Archivos adjuntos a la solicitud</h4>
+            </td>
+          </tr>
+          <tr *ngFor="let folder of folders">
+            <td>
+              <mat-icon>insert_drive_file</mat-icon>
+            </td>
+            <td>{{ folder.rutaArchivo }}</td>
+            <td>
+              <button mat-icon-button>
+                <mat-icon>delete</mat-icon>
+              </button>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="subasta-section">
+      <h3>Datos de la subasta</h3>
+      <mat-grid-list class="form-subasta" cols="2" rowHeight='4em'>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Monto recaudado(S/)" [(ngModel)]="solicitud.MontoRecaudado">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Avance de financiamiento(%)" [(ngModel)]="solicitud.AvanceFinanciamiento">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput [matDatepicker]="dateInit" placeholder="Fecha de inicio" [(ngModel)]="solicitud.FechaInicio">
+            <mat-datepicker-toggle matSuffix [for]="dateInit"></mat-datepicker-toggle>
+            <mat-datepicker #dateInit></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput [matDatepicker]="dateEnd" placeholder="Fecha de finalizacion" [(ngModel)]="solicitud.FechaFinalizacion">
+            <mat-datepicker-toggle matSuffix [for]="dateEnd"></mat-datepicker-toggle>
+            <mat-datepicker #dateEnd></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Número de acreedores" [(ngModel)]="solicitud.NumeroAcreedores">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Estado de la subasta" [(ngModel)]="solicitud.EstadoSubastaNombre">
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+  

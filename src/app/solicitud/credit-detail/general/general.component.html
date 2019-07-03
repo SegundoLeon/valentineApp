@@ -1,0 +1,159 @@
+<div class="form-general">
+    <div class="information-form">
+      <h3>Datos generalos</h3>
+      <mat-grid-list cols="2" rowHeight='4em'>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Nombres" [(ngModel)]="solicitud.NombreSolicitante">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Apellido paterno" [(ngModel)]="solicitud.ApellidoPaternoSolicitante">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Apellido materno" [(ngModel)]="solicitud.ApellidoMaternoSolicitante">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput [matDatepicker]="datebirth" placeholder="Fecha de nacimiento" [(ngModel)]="solicitud.FechaNacimiento">
+            <mat-datepicker-toggle matSuffix [for]="datebirth"></mat-datepicker-toggle>
+            <mat-datepicker #datebirth></mat-datepicker>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Tipo de documento" [(ngModel)]="solicitud.TipoDocumentoId">
+              <mat-option *ngFor="let item of documentTypeList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <table cellspacing="0">
+            <tr>
+              <td width="80%">
+                <mat-form-field>
+                  <input disabled matInput placeholder="Número de documento" [(ngModel)]="solicitud.NumeroDocumento">
+                </mat-form-field>
+              </td>
+              <td>
+                <mat-form-field>
+                  <input disabled maxlength="1" matInput placeholder="Digit. Verif" [(ngModel)]="solicitud.DigitoVerificacion">
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <label>Género</label>
+          <mat-radio-group  [(ngModel)]="solicitud.GeneroId">
+            <mat-radio-button disabled *ngFor="let item of genderList" [value]="item.id">{{ item.name }}</mat-radio-button>
+          </mat-radio-group>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Correo electrónico" [(ngModel)]="solicitud.CorreoElectronico">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input matInput placeholder="Número de celular" [(ngModel)]="solicitud.NumeroCelular" [disabled]="!formularios.enabled">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Ingreso mensual(S/)" [(ngModel)]="solicitud.IngresoMensual">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Grado de instruccion" [(ngModel)]="solicitud.GradoInstruccionId">
+              <mat-option *ngFor="let item of gradeList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div class="address-form">
+      <h3>Dirección y datos del préstamo</h3>
+      <mat-grid-list cols="2" rowHeight='4em'>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select placeholder="Pais" [disabled]="!formularios.enabled" [(ngModel)]="solicitud.PaisSolicitanteId" (change)="getAllDepartment(PaisSolicitanteId)">
+              <mat-option *ngFor="let item of ubigeoList" [value]="item.Ubigeo_ID">{{ item.Nombre }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input matInput placeholder="Dirección" [disabled]="!formularios.enabled" [(ngModel)]="solicitud.DireccionSolicitante">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select placeholder="Departamento" [disabled]="!formularios.enabled" [(ngModel)]="solicitud.DepartamentoSolicitanteId" (change)="getAllProvince(department)">
+              <mat-option *ngFor="let item of departmentList" [value]="item.Ubigeo_ID">{{ item.Nombre }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select placeholder="Provincia" [disabled]="!formularios.enabled" [(ngModel)]="solicitud.ProvinciaSolicitanteId" (change)="getAllDistrict(province)">
+              <mat-option *ngFor="let item of provinceList" [value]="item.Ubigeo_ID">{{ item.Nombre }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select placeholder="Distrito" [disabled]="!formularios.enabled" [(ngModel)]="solicitud.DistritoSolicitanteId">
+              <mat-option *ngFor="let item of districtList" [value]="item.Ubigeo_ID">{{ item.Nombre }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Estado civil" [(ngModel)]="solicitud.EstadoCivilId">
+              <mat-option *ngFor="let item of maritalStatusList" [value]="item.id">{{ item.name }}</mat-option>
+              <mat-option value="">Soltero</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+    <div class="couple-form">
+      <h3>Datos de tu pareja</h3>
+      <mat-grid-list cols="2" rowHeight='4em'>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Nombres" [(ngModel)]="solicitud.NombreConyugue">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Apellido paterno" [(ngModel)]="solicitud.ApellidoPaternoConyugue">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Apellido materno" [(ngModel)]="solicitud.ApellidoMaternoConyugue">
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <mat-select disabled placeholder="Tipo de documento" [(ngModel)]="solicitud.TipoDocumentoConyugueId">
+              <mat-option *ngFor="let item of documentTypeList" [value]="item.id">{{ item.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-grid-tile>
+        <mat-grid-tile>
+          <mat-form-field>
+            <input disabled matInput placeholder="Número de documento" [(ngModel)]="solicitud.NumeroDocumentoConyugue">
+          </mat-form-field>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </div>
+  </div>
+  

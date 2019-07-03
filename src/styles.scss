@@ -4,7 +4,33 @@
 @import url(https://fonts.googleapis.com/icon?family=Material+Icons);
 
 body {
-  font-family: Roboto;
+  font-family: 'Roboto', 'Lato', Arial;
   margin: unset;
   background-color: #eee;
+}
+
+/* Hyperlink, utilizado en el toobar */
+a {
+  cursor: pointer;
+  color: white;
+  text-decoration: none;
+}
+a:hover {
+  opacity: 0.8;
+}
+
+/* botones de los detalles de la solicitud */
+.botondetail {
+  width: 120px;
+}
+
+
+
+/* Estilos de Valentine */
+.contenedor {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+.full-width {
+  width: 100%;
 }
