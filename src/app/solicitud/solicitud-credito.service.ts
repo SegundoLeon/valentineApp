@@ -3,18 +3,22 @@ import { Router } from '@angular/router';
 import { HttpClient, HttpErrorResponse, HttpResponse, HttpResponseBase, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Utilitarios } from '../shared/utilitarios';
 import { HostnameConstants } from '../shared/constantes/hostname.constants';
-import { RegistroPaso1Model } from './registroPaso1.model';
+//import { RegistroPaso1Model } from './registroPaso1.model';
+import { SolicitudCreditoRequestF1Model } from './solicitud-credito-request-f1.model';
+import { SolicitudCreditoResponseF1Model } from './solicitud-credito-response-f1.model';
+import { SolicitudCreditoRequestF2Model } from './solicitud-credito-request-f2.model';
+import { SolicitudCreditoResponseF2Model } from './solicitud-credito-response-f2.model';
+
 import { RegistroPaso2Model } from './registroPaso2.model';
 import { ReniecConsultaModel } from './reniecConsulta.model';
 import { ReniecRespuestaModel } from './reniecRespuesta.model';
 import { CorreoRespuestaModel } from './correoRespuesta.model';
-import { Observable, Subject, throwError } from 'rxjs';
-import { map, take, catchError } from 'rxjs/operators';
+import { Observable, Subject, throwError, of } from 'rxjs';
+import { map, tap, take, catchError } from 'rxjs/operators';
 
-import { BaseResponse, CreditApplication, DetailProfitability,  //CreditApplicationDTO
-  DetailProfitabilityRequest, DetailProfitabilityResponse, Parameter,
-  ParameterDTO, Profitability, ProfitabilityDTO,
-  SearchCreditApplicationDTO, SolicitudCredito, SolicitudCreditoRequest, UbigeoDTO} from './credit-application.model';
+import { BaseResponse, CreditApplication, DetailProfitability, DetailProfitabilityRequest,
+         DetailProfitabilityResponse, Parameter, ParameterDTO, Profitability, ProfitabilityDTO,
+         SearchCreditApplicationDTO, SolicitudCredito, SolicitudCreditoRequest, UbigeoDTO} from './credit-application.model';
 import { Solicitud, SolicitudAdapter } from './solicitud-model';
 import { ParametroConstants } from './parametro.constants';
 
@@ -24,9 +28,13 @@ import { ParametroConstants } from './parametro.constants';
 })
 export class SolicitudCreditoService {
   public solicitudCredito: SolicitudCredito = new SolicitudCredito();
-  private T_SOLICITUD_ENDPOINT  = 'T_SolicitudCredito';
-  private PARAMETRO = 'T_Parametro';
-  private UBIGEO = 'T_Ubigeo';
+  private httpOptions = { headers: new HttpHeaders({'Content-Type': 'application/json'}) };
+  private T_SOLICITUD_ENDPOINT  = 'CuentaPrestamo';
+  //private T_SOLICITUD_ENDPOINT  = 'T_SolicitudCredito';
+  private PARAMETRO = 'Parametros';
+  //private PARAMETRO = 'T_Parametro';
+  private UBIGEO = 'Ubigeos';
+  //private UBIGEO = 'T_Ubigeo';
   private INGRESO = 'T_Ingreso';
   private ARCHIVO = 'T_Archivo';
   private URL_BASE = Utilitarios.crearURLSolicitud(HostnameConstants.VALENTINE_WEBAPI.host);
@@ -54,15 +62,49 @@ export class SolicitudCreditoService {
     },
   };
 
-  constructor(private router: Router, private http: HttpClient,
+  constructor(private router: Router, private httpClient: HttpClient,
               private solicitudAdapter: SolicitudAdapter) {
     this.URL_SOLICITUD = `${this.URL_BASE}${this.T_SOLICITUD_ENDPOINT}`;
-
   }
+
+  // Manejo de errores aun no utlizado.
+  private handleError<T>(operation = 'operation', result?: T) {
+    return (error: any): Observable<T> => {
+      return of(result as T);
+    };
+  }
+
+  // Permite el primer paso del proceso de solicitud de credito
+  // Servicio probado con exito, falta agregar la gestion de errores
+  public registerFirstStep(model: SolicitudCreditoRequestF1Model): Observable<SolicitudCreditoResponseF1Model> {
+    this.URL = `${this.URL_SOLICITUD}`;
+    return this.httpClient.post<SolicitudCreditoResponseF1Model>(this.URL, model);
+  }
+
+  // Permite el segundo paso del proceso de solicitud de credito
+  public registerSecondStep(id: string, model: SolicitudCreditoRequestF2Model): Observable<SolicitudCreditoResponseF2Model> {
+    this.URL = `${this.URL_SOLICITUD}/${id}`;
+    return this.httpClient.put<SolicitudCreditoResponseF2Model>(this.URL, model).pipe(catchError(this.manejoError));
+  }
+
+  // Para buscar solicitudes de credito
+  getCreditApplication(solicitudRequest: SearchCreditApplicationDTO): Observable<Solicitud[]> {
+    this.URL = `${this.URL_SOLICITUD}/SearchSolicitudCredito`;
+    return this.httpClient.post<any[]>(this.URL, solicitudRequest).pipe(
+      map(res => res['data'].map(item => this.solicitudAdapter.adapt(item))),
+    );
+  }
+
+
+
+
+
+
+
 
   // Simula validar datos en la RENIEC
   public validarDatosReniec(model: ReniecConsultaModel): Observable<any> {
-    return this.http.post(HostnameConstants.RENIEC_WEBAPI.host, model)
+    return this.httpClient.post(HostnameConstants.RENIEC_WEBAPI.host, model)
           .pipe(catchError(this.manejoError));
           //tap(response => console.log(response)), map(response => response.toString),
   }
@@ -79,36 +121,17 @@ export class SolicitudCreditoService {
   // Verifica si el solicitante tiene alguna solicitud de credito pendiente
   public validarSolicitudExistente(DNI: string) {
     this.URL = `${this.URL_SOLICITUD}/ValidarSolicitudExistente/${DNI}/DNI`;
-    return this.http.get(this.URL);
+    return this.httpClient.get(this.URL);
   }
 
   // Envia correo electronico a los solicitantes
   public enviarMail(model: CorreoRespuestaModel) {
     this.URL = `${this.URL_SOLICITUD}/EnviarMail`;
-    return this.http.post(this.URL, model);
-  }
-
-  // Permite el primer paso del proceso de solicitud de credito
-  public registerFirstStep(model: RegistroPaso1Model) {
-    this.URL = `${this.URL_SOLICITUD}`;
-    return this.http.post(this.URL, model);
-  }
-
-  // Permite el segundo paso del proceso de solicitud de credito
-  public registerSecondStep(id: number, model: RegistroPaso2Model): Observable<any> {
-    this.URL = `${this.URL_SOLICITUD}/${id}`;
-    return this.http.put(this.URL, model).pipe(catchError(this.manejoError));
-  }
-
-  getCreditApplication(solicitudRequest: SearchCreditApplicationDTO): Observable<Solicitud[]> {
-    this.URL = `${this.URL_SOLICITUD}/SearchSolicitudCredito`;
-    return this.http.post<any[]>(this.URL, solicitudRequest).pipe(
-      map(res => res['data'].map(item => this.solicitudAdapter.adapt(item))),
-    );
+    return this.httpClient.post(this.URL, model);
   }
 
   getCreditApplicationByCode(code: string): Observable<SolicitudCredito> {
-    return this.http
+    return this.httpClient
       .get<SolicitudCredito>(this.methods.creditApplication.getSolicitudCreditoByCode(code)).pipe(
         map<SolicitudCredito, SolicitudCredito>((solicitudCredito) => {
           const fechaNacimientoArray = (solicitudCredito.FechaNacimiento || '').toString().split('/');
@@ -174,12 +197,12 @@ export class SolicitudCreditoService {
   }
 
   getUbigeo(parentId: string | number = '0'): Observable<UbigeoDTO[]> {
-    return this.http
+    return this.httpClient
       .get<UbigeoDTO[]>(this.methods.ubigeo.getByPadreId(parentId));
   }
 
   saveApplication(solicitud: SolicitudCreditoRequest): Observable<any> {
-    return this.http
+    return this.httpClient
       .post(this.methods.creditApplication.saveSolicitud(), solicitud);
   }
 
@@ -188,7 +211,7 @@ export class SolicitudCreditoService {
   }
 
   getFilesByApplicationCode(code: string): Observable<any> {
-    return this.http
+    return this.httpClient
       .get<any>(this.methods.file.GetByApplicationCode(code)).pipe(
         map<any, any>((response) => {
           return response;
@@ -197,14 +220,14 @@ export class SolicitudCreditoService {
   }
 
   getAnyParamList(id: string): Observable<Parameter[]> {
-    return this.http.get<ParameterDTO[]>(this.methods.params.getByPadreId(id)).pipe(
-      map<ParameterDTO[], Parameter[]>((parametersDTO: ParameterDTO[]) => {
+    return this.httpClient.get<ParameterDTO[]>(this.methods.params.getByPadreId(id)).pipe(
+      map<ParameterDTO[], Parameter[]>((parametersDTO: ParameterDTO[]) => {// Agregado recien el 10/1
         parametersDTO = parametersDTO || [];
         return parametersDTO.map((parameterDto) => {
           return {
-            id: parameterDto.ID,
-            name: parameterDto.Nombre,
-            parent: parameterDto.Padre,
+            code: parameterDto.Codigo,
+            name: parameterDto.Nombre
+            //parent: parameterDto.Padre,
           };
         });
       })
@@ -213,11 +236,12 @@ export class SolicitudCreditoService {
 }
 
 
-const HOST = 'http://valentineservices.azurewebsites.net/api';
+//const HOST = 'http://valentineservices.azurewebsites.net/api';
+const HOST = 'http://valentinebe.azurewebsites.net/api';
 const MODULES = {
-  params: 'T_Parametro',
-  creditApplication: 'T_SolicitudCredito',
-  ubigeo: 'T_Ubigeo',
+  params: 'Parametros',
+  creditApplication: 'CuentaPrestamo',
+  ubigeo: 'Ubigeos',
   ingreso: 'T_Ingreso',
   file: 'T_Archivo',
 };

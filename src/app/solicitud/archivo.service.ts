@@ -10,7 +10,7 @@ import { Utilities } from '../shared/services/utilities';
 
 @Injectable()
 export class ArchivoService {
-    private T_ARCHIVO_ENDPOINT: string = 'T_Archivo';
+    private T_ARCHIVO_ENDPOINT = 'Archivos';
     private BASE_URL: string = Utilities.buildRequestURL(
         HostnameConstants.VALENTINE_WEBAPI.host);
     private REQUEST_URL: string;

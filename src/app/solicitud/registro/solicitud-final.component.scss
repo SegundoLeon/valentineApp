@@ -1,0 +1,62 @@
+.contenedor {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.full-width {
+  width: 100%;
+}
+
+.solicitud-card {
+  min-width: 120px;
+  margin: 20px auto;
+  //max-width: 900px;
+}
+
+.mat-radio-button {
+  display: block;
+  margin: 5px 0;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.col {
+  flex: 1;
+  margin-right: 20px;
+}
+
+.col:last-child {
+  margin-right: 0;
+}
+
+.cuadro-resaltado {
+  background-color: #ffd740;
+  color: red;
+  height: 20px;
+  padding: 10px;
+}
+
+.cuadro-mensaje {
+  height: 40px;
+}
+
+.mat-card-avatar {
+  background-size: cover;
+}
+
+.monto-derecha {
+  text-align: right;
+}
+
+input.sinincremento::-webkit-outer-spin-button,
+input.sinincremento::-webkit-inner-spin-button {
+display: none;
+}
+
+input.monto-derecha {
+  -moz-appearance: textfield;
+}
+

@@ -11,7 +11,7 @@ import { Utilitarios } from '../shared/utilitarios';
     providedIn: 'root'
 })
 export class UbigeoService {
-    private ENDPOINT: string = 'T_Ubigeo';
+    private ENDPOINT = 'Ubigeos';
     private URL_BASE: string = Utilitarios.crearURLSolicitud(HostnameConstants.VALENTINE_WEBAPI.host);
     private URL_SOLICITUD: string;
     private URL: string;
@@ -21,9 +21,9 @@ export class UbigeoService {
     }
 
 
-    //: Observable<UbigeoModel[]> 
+    //: Observable<UbigeoModel[]>
     public getByPadreID(padreId: number){
         this.URL = `${this.URL_SOLICITUD}/${padreId}`;
-        return this.http.get(this.URL);        
+        return this.http.get(this.URL);
     }
 }

@@ -1,6 +1,6 @@
 <div class="contenedor">
   <h2>Buscar solicitudes de crédito</h2>
-    
+
   <div class="search-section">
     <div class="search-form" novalidate>
       <mat-grid-list cols="4" rowHeight='4em'>
@@ -16,15 +16,16 @@
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
-            <mat-select placeholder="Estado" [(ngModel)]="solicitud.EstadoId">
-              <mat-option *ngFor="let estado of estadosSolicitud" [value]="estado.ID">{{ estado.Nombre }}</mat-option>
+            <mat-select placeholder="Estado" [(ngModel)]="solicitud.Estado">
+              <mat-option>Todos</mat-option>
+              <mat-option *ngFor="let estado of estadosSolicitud" [value]="estado.codigo">{{ estado.nombre }}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
         <mat-grid-tile>
           <mat-form-field>
             <mat-select placeholder="Destino de crédito" [(ngModel)]="solicitud.DestinoCreditoId">
-              <mat-option *ngFor="let destino of destinosSolicitud" [value]="destino.ID">{{ destino.Nombre }}</mat-option>
+              <mat-option *ngFor="let destino of destinosSolicitud" [value]="destino.codigo">{{ destino.nombre }}</mat-option>
             </mat-select>
           </mat-form-field>
         </mat-grid-tile>
@@ -133,4 +134,3 @@
 
   </div>
 </div>
-  

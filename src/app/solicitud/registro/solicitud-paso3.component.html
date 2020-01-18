@@ -1,3 +1,45 @@
-<p>
-  solicitud-paso3 works!
-</p>
+<div class="contenedor">
+  <h2>Registro de solicitud de credito - paso 3</h2>
+
+  <form [formGroup]="registroPaso3Formulario" novalidate>
+    <mat-card class="shipping-card mat-elevation-z8">
+      <div *ngIf="mostrarMensaje" class="cuadro-mensaje">
+        <div class="cuadro-resaltado">{{ mensajeError }}</div>
+      </div>
+
+      <mat-card-content>
+        <h3>Felicitaciones su solicitud ha sido admitida.</h3>
+        <p>
+          Para iniciar el financiamiento necesitamos verificar tu dirección e ingresos económicos para lo cual necesitamos que adjuntes
+          la siguiente información:
+        </p>
+        <ul>
+          <li>
+              Una copia legible en ambas caras de tu documento de indentidad
+          </li>
+          <li>
+              Una copia legible de la última factura de cualquiero servicio público (agua, luz, gas, cable, teléfono, etc).
+          </li>
+          <li>
+              Una copia legible de tu última boleta de pago para dependientes o recibos por honorarios para independientes que sustenten
+              tus ingresos mensuales.
+          </li>
+        </ul>
+
+        <div class="row">
+          <div class="col">
+
+          </div>
+          <div class="col">
+
+          </div>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" (click)="registrarTercerPaso()" [disabled]="!registroPaso3Formulario.valid">Cargar archivos</button>
+        <button mat-raised-button color="primary" type="submit" (click)="navegar()">Final</button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</div>

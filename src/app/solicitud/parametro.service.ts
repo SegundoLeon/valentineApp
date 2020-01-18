@@ -8,7 +8,7 @@ import { HostnameConstants } from './../shared/constantes/hostname.constants';
   providedIn: 'root'
 })
 export class ParametroService  {
-  private ENDPOINT  = 'T_Parametro';
+  private ENDPOINT  = 'Parametros';
   private URL_BASE = Utilitarios.crearURLSolicitud(HostnameConstants.VALENTINE_WEBAPI.host);
   private URL_SOLICITUD: string;
   private URL: string;

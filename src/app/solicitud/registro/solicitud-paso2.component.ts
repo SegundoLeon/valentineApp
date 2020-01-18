@@ -4,9 +4,13 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ParametroModel } from '../parametro.model';
 import { UbigeoModel } from '../ubigeo.model';
 import { ParametroService } from '../parametro.service';
-import { UbigeoService } from  '../ubigeo.service';
+import { UbigeoService } from '../ubigeo.service';
 import { EvaluacionService } from '../evaluacion.service';
 import { RegistroPaso2Model } from '../registroPaso2.model';
+
+import { SolicitudCreditoRequestF2Model } from '../solicitud-credito-request-f2.model';
+import { SolicitudCreditoResponseF2Model } from '../solicitud-credito-response-f2.model';
+
 import { FormControl, FormGroupDirective, NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 import { SolicitudCreditoService } from '../solicitud-credito.service';
@@ -38,9 +42,9 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 })
 export class SolicitudPaso2Component implements OnInit {
   matcher = new MyErrorStateMatcher();
-  codigoSolicitante: number;
-  solictanteCasado: boolean = false;
-  esPEP: boolean = false;
+  codigoSolicitud: string;
+  solicitanteCasado = false;
+  esPEP = false;
   paises: UbigeoModel[] = [];
   departamentos: UbigeoModel[] = [];
   provincias: UbigeoModel[] = [];
@@ -48,21 +52,18 @@ export class SolicitudPaso2Component implements OnInit {
   plazos: ParametroModel[] = [];
   seguros: ParametroModel[] = [];
   estadosCiviles: ParametroModel[] = [];
-  actividades: ParametroModel[] = [];
-  rubrosActividades: ParametroModel[] = [];
   documentos: ParametroModel[] = [];
   tiposCuentas: ParametroModel[] = [];
   bancos: ParametroModel[] = [];
-  registroPaso2Model: RegistroPaso2Model = new RegistroPaso2Model();
-  registroPaso2Formulario: FormGroup;
+  registro = new SolicitudCreditoRequestF2Model();
+  registroPaso2Formulario: FormGroup;   // Nombre del formulario en HTML
   mensajeError = '';
   mostrarMensaje = false;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router,
-              private parametroService: ParametroService, private solicitudCreditoService: SolicitudCreditoService, 
-              private ubigeoService: UbigeoService, private evaluacionService: EvaluacionService                      
-              ) {
-    this.codigoSolicitante = Number(this.route.snapshot.paramMap.get('id'));
+              private parametroService: ParametroService, private solicitudCreditoService: SolicitudCreditoService,
+              private ubigeoService: UbigeoService, private evaluacionService: EvaluacionService) {
+    this.codigoSolicitud = this.route.snapshot.paramMap.get('id');
     this.cargarCombos();
   }
 
@@ -86,37 +87,36 @@ export class SolicitudPaso2Component implements OnInit {
   }
 
   estadoCivilChange(id: any): void {
-    if (id.toString() === '18') {
-      this.solictanteCasado = true;
+    if (id.toString() === '32') {
+      this.solicitanteCasado = true;
+      console.log('aaaa' + id);
+    } else {
+      this.solicitanteCasado = false;
+      console.log(id);
     }
-    else {
-      this.solictanteCasado = false;
-    }
+    //console.log(this.solicitanteCasado.toString());
+    //console.log(id);
   }
 
   private inicializarFormulario() {
     this.registroPaso2Formulario = this.formBuilder.group({
+      cuotas: [null, [Validators.required]],
+      tipoCuentaBancaria: [null, [Validators.required]],
+      bancoCodigo: [null, [Validators.required]],
+      codigoInterbancario: [null, [Validators.required, Validators.minLength(20), Validators.maxLength(20), Validators.pattern('[0-9]*')]],
+
       pais: [null, [Validators.required]], //new FormControl(null, [Validators.required]),
-      direccionSolicitante: [null, [Validators.required]],
+      direccion: [null, [Validators.required]],
       departamento: [null, [Validators.required]],
       provincia: [null, [Validators.required]],
       distrito: [null, [Validators.required]],
-      montoSolicitado: [null, [Validators.required, Validators.min(2000), Validators.max(30000), Validators.pattern('[0-9]*')]],
-      plazoPrestamo: [null, [Validators.required]],
-      seguroDesgravamen: [null, [Validators.required]],
       estadoCivil: [null, [Validators.required]],
-      detalleMotivo: [null, [Validators.required, Validators.maxLength(120)]],
-      nombresConyuge: [null, [Validators.required, Validators.maxLength(60)]],      
-      apellidoPaternoConyuge: [null, [Validators.required, Validators.maxLength(60)]],
-      apellidoMaternoConyuge: [null, [Validators.required, Validators.maxLength(60)]],
-      tipoDocumentoConyuge: [null],
-      numeroDocConyuge: [null],
-      tipoActividad: [null, [Validators.required]],
-      rubroActividad: [null, [Validators.required]],
       lugarTrabajo: [null, [Validators.required, Validators.maxLength(100)]],
-      tipoCuenta: [null, [Validators.required]],
-      banco: [null, [Validators.required]],
-      cuentaInterbancaria: [null, [Validators.required, Validators.minLength(20), Validators.maxLength(20), Validators.pattern('[0-9]*')]],
+      nombrePareja: [null, [Validators.required, Validators.maxLength(60)]],
+      apellidoPaternoPareja: [null, [Validators.required, Validators.maxLength(60)]],
+      apellidoMaternoPareja: [null, [Validators.required, Validators.maxLength(60)]],
+      tipoDocumentoPareja: [null],
+      numeroDocumentoPareja: [null],
       esPEP: false,
       cargoPEP: [null],
     });
@@ -125,73 +125,50 @@ export class SolicitudPaso2Component implements OnInit {
   private cargarCombos() {
     this.ubigeoService.getByPadreID(ParametroConstants.PAIS).subscribe(
       (result: UbigeoModel[]) => {this.paises = result;}, error => console.error(error), );
-    this.parametroService.getByPadreID(ParametroConstants.SEGURO).subscribe(
-      (result: ParametroModel[]) => {this.seguros = result}, error => console.error(error), );
     this.parametroService.getByPadreID(ParametroConstants.ESTADOCIVIL).subscribe(
-      (result: ParametroModel[]) => {this.estadosCiviles = result}, error => console.error(error), );
-    this.parametroService.getByPadreID(ParametroConstants.TIPOACTIVIDAD).subscribe(
-      (result: ParametroModel[]) => {this.actividades = result}, error => console.error(error), ); 
-    this.parametroService.getByPadreID(ParametroConstants.RUBROACTIVIDAD).subscribe(
-      (result: ParametroModel[]) => {this.rubrosActividades = result}, error => console.error(error), );
+      (result: ParametroModel[]) => {this.estadosCiviles = result;}, error => console.error(error), );
     this.parametroService.getByPadreID(ParametroConstants.TIPODOCUMENTO).subscribe(
-      (result: ParametroModel[]) => {this.documentos = result}, error => console.error(error), );  
+      (result: ParametroModel[]) => {this.documentos = result;}, error => console.error(error), );
     this.parametroService.getByPadreID(ParametroConstants.TIPOCUENTA).subscribe(
-      (result: ParametroModel[]) => {this.tiposCuentas = result}, error => console.error(error), );
+      (result: ParametroModel[]) => {this.tiposCuentas = result;}, error => console.error(error), );
     this.parametroService.getByPadreID(ParametroConstants.BANCOS).subscribe(
-      (result: ParametroModel[]) => {this.bancos = result}, error => console.error(error), );
+      (result: ParametroModel[]) => {this.bancos = result;}, error => console.error(error), );
   }
 
   private registrarSegundoPaso(): void {
-    var montoSolicitado = this.registroPaso2Formulario.value.montoSolicitado;
-    if (montoSolicitado < 2000 || montoSolicitado > 30000 ) {
-      this.mostrarMensaje = true;
-      this.mensajeError = 'El monto a solicitar debe estar entre S/ 2,000 y S/ 30,000)';
-      return;      
+    this.mostrarMensaje = false;
+    this.registro.cuotas = this.registroPaso2Formulario.value.cuotas;
+    this.registro.tipoCuentaBancaria = this.registroPaso2Formulario.value.tipoCuentaBancaria;
+    this.registro.bancoCodigo = this.registroPaso2Formulario.value.bancoCodigo;
+    this.registro.codigoInterbancario = this.registroPaso2Formulario.value.codigoInterbancario;
+    this.registro.prestatario.pais = this.registroPaso2Formulario.value.pais;
+    this.registro.prestatario.direccion = this.registroPaso2Formulario.value.direccion;
+    this.registro.prestatario.departamento = this.registroPaso2Formulario.value.departamento;
+    this.registro.prestatario.provincia = this.registroPaso2Formulario.value.provincia;
+    this.registro.prestatario.distrito = this.registroPaso2Formulario.value.distrito;
+    this.registro.prestatario.estadoCivil = this.registroPaso2Formulario.value.estadoCivil;
+    this.registro.prestatario.lugarTrabajo = this.registroPaso2Formulario.value.lugarTrabajo;
+    this.registro.prestatario.esPep = this.registroPaso2Formulario.value.esPep;
+    this.registro.prestatario.cargoPep = this.registroPaso2Formulario.value.cargoPep;
+
+    if (this.solicitanteCasado) {
+      this.registro.prestatario.nombrePareja = this.registroPaso2Formulario.value.nombrePareja;
+      this.registro.prestatario.apellidoPaternoPareja = this.registroPaso2Formulario.value.apellidoPaternoPareja;
+      this.registro.prestatario.apellidoMaternoPareja = this.registroPaso2Formulario.value.apellidoMaternoPareja;
+      this.registro.prestatario.tipoDocumentoPareja = this.registroPaso2Formulario.value.tipoDocumentoPareja;
+      this.registro.prestatario.numeroDocumentoPareja = this.registroPaso2Formulario.value.numeroDocumentoPareja;
     }
 
-    // Si el solicitante es casado evaluamos a su conyugue en nuestro Modelo de Riesgo
-    if(this.solictanteCasado) {
-
-      var evaluacionConsultaModel: EvaluacionConsultaModel = new EvaluacionConsultaModel();
-      evaluacionConsultaModel.NumeroDni = this.registroPaso2Formulario.value.numeroDocConyuge;
-      evaluacionConsultaModel.DigitoVerificacion = '';
-      evaluacionConsultaModel.ApellidoPaterno = this.registroPaso2Formulario.value.apellidoPaternoConyuge;
-      evaluacionConsultaModel.ApellidoMaterno = this.registroPaso2Formulario.value.apellidoMaternoConyuge;
-      evaluacionConsultaModel.Nombres = this.registroPaso2Formulario.value.nombresConyuge;
-      evaluacionConsultaModel.Parentesco = 'C'; // Es el conyuge
-
-      this.evaluacionService.obtenerEvaluacionRiesgo(evaluacionConsultaModel).subscribe(
-        (result: EvaluacionRespuestaModel) => {
-          if (result.Resultado === 'rechazado') {
-            //this.storageManager.deleteData(); // Borra informacion del cookie
-            this.router.navigate([`/resultado`]); }
-          else {
-            // Paso la evaluacion de nuestro Modelo de Riesgos
-            console.log("Evaluacion exitosa de la conyuge");
-            this.registroPaso2Model.setAll(this.registroPaso2Formulario.value);
-            this.registroPaso2Model.estado = EstadoSolicitudCreditoConstants.REGISTROENPROCESO;
-            this.registroPaso2Model.etapa = EtapasSolicitudCreditoConstants.REGISTRO;
-            //console.log('Datos a grabar: ' + this.registroPaso2Model.toString());
-            this.solicitudCreditoService.registerSecondStep(this.codigoSolicitante, this.registroPaso2Model).subscribe(
-              (registerSecondStepModelResult: RegistroPaso2Model) => {
-                //var localStorageModel: LocalStorageModel = new LocalStorageModel();
-                //localStorageModel.solicitudCreditoId = this.id;
-                //localStorageModel.step = 3;
-                //this.storageManager.savePermanentData(localStorageModel, LocalStoreManager.DBKEY_USER_DATA);
-                this.router.navigate([`/solicitud/resultado`]);
-              }, error => console.error(error)
-            );
-
-            
-          }
-        },
-        error => console.error(error),
-      );
-    }
+    this.solicitudCreditoService.registerSecondStep(this.codigoSolicitud, this.registro).subscribe(
+      (respuesta: SolicitudCreditoResponseF2Model) => {
+        console.log(respuesta);
+        this.router.navigate(['/solicitud/resultado', this.codigoSolicitud]);
+      }, error => console.error(error)
+    );
   }
 
   navegar() {
-    this.router.navigate(['/solicitud/evalua']);
+    this.router.navigate(['/solicitud/resultado', this.codigoSolicitud]);
   }
 
 }

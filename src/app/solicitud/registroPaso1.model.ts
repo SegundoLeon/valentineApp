@@ -20,6 +20,12 @@ export class RegistroPaso1Model extends BaseModel {
   fechaRegistro: Date;
   puntuacionBuro: number;
 
+  //Adicional
+  detalleMotivo: string;
+  tipoActividad: number;
+  rubroActividad: number;
+  montoSolicitado: number;
+
   constructor() {
     super();
   }

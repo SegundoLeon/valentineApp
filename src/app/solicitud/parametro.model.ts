@@ -1,8 +1,8 @@
 import { BaseModel } from './base.model';
 
 export class ParametroModel extends BaseModel {
-  ID: number;
-  Nombre: string;
+  codigo: number;
+  nombre: string;
 
   constructor() {
     super();

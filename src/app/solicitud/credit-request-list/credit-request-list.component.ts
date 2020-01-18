@@ -1,7 +1,11 @@
+import { FormControl } from '@angular/forms';
 import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BaseResponse, CreditApplication, CreditApplicationDTO,
          Parameter, SearchCreditApplicationDTO } from '../credit-application.model';
+
+
+
 import { SolicitudCreditoService } from './../solicitud-credito.service';
 import { ParametroService } from './../parametro.service';
 import { ParametroConstants } from '../parametro.constants';
@@ -18,33 +22,34 @@ import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
   styleUrls: ['./credit-request-list.component.scss'],
 })
 export class CreditRequestListComponent implements OnInit, AfterViewInit {
-  //public creditDestinationList: Parameter[];
-  public dataSource = new MatTableDataSource<Solicitud>(); //Solicitud[];//CreditApplication[];
-  
-  //public dataSource2: SolicitudResponse[];
-  //nombre de las columnas del conjunto de datos a mostrar en la tabla
-  public displayedColumns: string[] = ['code', 'name', 'documentNumber', 'amount', 'date', 'period', 'status', 'penTea', 'finalTea', 'operations'];
-  public currentPage: number =  1;
+  public dataSource = new MatTableDataSource<Solicitud>();
+  // Nombre de las columnas del conjunto de datos a mostrar en la tabla.
+  public displayedColumns = ['code', 'name', 'documentNumber', 'amount', 'date', 'period', 'status', 'penTea', 'finalTea', 'operations'];
+  public currentPage =  1;
   public numPages: number[] = [];
-  public pageSize: number = 10;
+  public pageSize = 10;
   public total: number;
+  // Clase utilizada para enviar los parametros de la consulta al servicio.
   public solicitud: SearchCreditApplicationDTO = new SearchCreditApplicationDTO();
-  //public statusList: Parameter[];
 
-  // los combos del buscador 
+  // public statusList: Parameter[];
+
+  // los combos del buscador
   public destinosSolicitud: ParametroModel[] = [];
   public estadosSolicitud: ParametroModel[] = [];
+
+
 
   public estaCargando = false;
 
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
 
-  constructor(private router: Router, private solicitudCreditoService: SolicitudCreditoService, 
+  constructor(private router: Router, private solicitudCreditoService: SolicitudCreditoService,
               private parametroService: ParametroService) {
     //this.displayedColumns = [];
     //this.dataSource = [];
     //this.dataSource2 = [];
-    
+
   }
 
   ngOnInit() {
@@ -61,7 +66,7 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
   }
 
   private cargarCombos() {
-    this.parametroService.getByPadreID(ParametroConstants.ESTADOSOLICITUD).subscribe(
+    this.parametroService.getByPadreID(ParametroConstants.ESTADOSOLICITUDCREDITO).subscribe(
         (result: ParametroModel[]) => { this.estadosSolicitud = result; }, error => console.error(error), );
     this.parametroService.getByPadreID(ParametroConstants.DESTINOCREDITO).subscribe(
         (result: ParametroModel[]) => { this.destinosSolicitud  = result; }, error => console.error(error), );
@@ -72,7 +77,7 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
     this.solicitud.Paginacion.Page = currentPage;
     this.solicitud.Paginacion.PageSize = this.pageSize;
 
-    //this.solicitudCreditoService.getCreditApplication(this.solicitud);    
+    //this.solicitudCreditoService.getCreditApplication(this.solicitud);
     this.estaCargando = true;
     this.solicitudCreditoService
       .getCreditApplication(this.solicitud)
@@ -83,7 +88,7 @@ export class CreditRequestListComponent implements OnInit, AfterViewInit {
         this.total = 20;//response.total;
         //this.numPages = this.calculateNumPages(this.total, this.pageSize);
         this.estaCargando = false;
-      });      
+      });
   }
 
   private calculateNumPages(total: number, size: number): number[] {

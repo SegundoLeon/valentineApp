@@ -2,9 +2,15 @@ export const HostnameConstants = {
 
   VALENTINE_WEBAPI: {
     name: 'valentine-webapi',
-    host: 'http://valentineservices.azurewebsites.net/',
+    host: 'http://localhost:55584/',
     versions: { V1: 'v1', },
   },
+
+  //VALENTINE_WEBAPI: {
+  //  name: 'valentine-webapi',
+  //  host: 'http://valentineservices.azurewebsites.net/',
+  //  versions: { V1: 'v1', },
+  //},
 
   EVALUAR_WEBAPI: {
     name: 'clips-webapi',
