@@ -22,7 +22,6 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSortModule } from '@angular/material/sort';
 import { MatTableModule } from '@angular/material/table';
 import { MatToolbarModule } from '@angular/material/toolbar';
-//import { MatMomentDateModule } from '@angular/material-moment-adapter';
 
 @NgModule({
   declarations: [
@@ -36,7 +35,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
     BrowserModule, BrowserAnimationsModule, AppRoutingModule, HttpClientModule,
     MatToolbarModule, MatButtonModule, MatFormFieldModule, MatTableModule,
     MatPaginatorModule, MatSortModule, MatProgressSpinnerModule, MatDividerModule,
-    MatMenuModule, MatDialogModule//, MatMomentDateModule
+    MatMenuModule, MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
